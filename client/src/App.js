@@ -67,51 +67,45 @@ function App() {
 
   return (
     <Fragment>
-      <div className="container-fluid">
-        <div className="row">
-          <nav className="col-md-2 d-none d-md-block bg-light sidebar">
-            <div className="sidebar-sticky">
-            <h5 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-5 mb-4 ">
-                <span>Dashboard</span>
-            </h5>
-              <ul className="nav flex-column">
-                <li className="nav-item">
-                  <a className="nav-link active" href="#" onClick={togglePosMode}>
+      <div className="grid-container grid-container--home">
+          <nav className="navigation">
+              <ul className="primary-navigation underline-indicators grid">
+                <li className="">
+                  <a className="uppercase ff-sans-cond text-dark letter-spacing-2 active" href="#" onClick={togglePosMode}>
                   <i className="fas fa-cash-register"></i>
                   Point Of Sale<span className="sr-only">(current)</span>
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#"onClick={toggleAdminMode}>
+                <li className="">
+                  <a className="uppercase ff-sans-cond text-dark letter-spacing-2" href="#"onClick={toggleAdminMode}>
                   <i className="fas fa-chart-line"></i>
                     Admin
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#" onClick={toggleInventoryMode}>
+                <li className="">
+                  <a className="uppercase ff-sans-cond text-dark letter-spacing-2" href="#" onClick={toggleInventoryMode}>
                   <i className="fas fa-boxes"></i>
                     Inventory
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#" onClick={toggleLowStockMode}>
+                <li className="">
+                  <a className="uppercase ff-sans-cond text-dark letter-spacing-2" href="#" onClick={toggleLowStockMode}>
                   <i className="fas fa-truck-loading"></i>
                     Low Stock
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#" onClick={toggleBestSellerMode}>
+                <li className="">
+                  <a className="uppercase ff-sans-cond text-dark letter-spacing-2" href="#" onClick={toggleBestSellerMode}>
                   <i className="fas fa-award"></i>
                   Best Sellers
                   </a>
                 </li>
               </ul>
-            </div>
           </nav>
           
 
-          <main role="main" className="col-md-10 ml-sm-auto col-lg-10 pt-3 px-2">
-            <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+          <main role="main" className="">
+            <div className="">
             {adminMode ? <Suspense fallback={<div>Loadind...</div>}><Admin /></Suspense>: null}
             {posMode ? <PoS /> : null}
             {inventoryMode ? <Suspense fallback={<div>Loadind...</div>}><Inventory /></Suspense> : null}
@@ -119,7 +113,6 @@ function App() {
             {bestSellerMode ? <Suspense fallback={<div>Loadind...</div>}><BestSellers /></Suspense> : null}
             </div>
           </main>
-        </div>
     </div>
     </Fragment>
   );

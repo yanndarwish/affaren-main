@@ -126,7 +126,7 @@ const Inventory = () => {
                 </div>
             </div>
             <div className="input-group mt-5 mb-3">
-                <input type="number" className="form-control" placeholder="Scan Barcode" value={barcode} onChange={e => setBarcode((e.target.value))} aria-label="Search Barcode" id="barcode-input" autoFocus />
+                <input id="inventory-input" className="form-control" placeholder="Scan Barcode" value={barcode} onChange={e => setBarcode((e.target.value))} aria-label="Search Barcode" id="barcode-input" autoFocus />
             </div>
             {product ? <DisplayProductComponent product={product} editProduct={editProduct}/> : null}
             {newProduct ? <CreateProduct addProduct={addProduct}/> : null}

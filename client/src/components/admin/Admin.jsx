@@ -163,6 +163,10 @@ const Admin = ()  => {
     }, [selectedDate]);
 
     useEffect(() => {
+        monthDetail();
+    }, [sales]);
+
+    useEffect(() => {
         monthDetail()
     }, [selectedMonth]);
 

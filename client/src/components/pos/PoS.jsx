@@ -78,7 +78,7 @@ const PoS = () => {
                 setQtyUpdated(true);
             }
             catch (err) {
-                console.error(err.message);
+                console.log('Product not found');
             }
         }
     }
@@ -482,7 +482,7 @@ const PoS = () => {
 
     return (
         <Fragment>
-            <div className="container-fluid text-center p-4 row">
+            <div className="grid-container grid-container--pos">
                 <div className="col-md-8">
                     <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                         <h1 className="h2">Point Of Sale</h1>
@@ -544,7 +544,7 @@ const PoS = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="row justify-content-between grid-container">
+                    <div className="row justify-content-between">
                         <div className="card" style={{"zIndex":"1"}} data-id="1132" data-name="Bulle" data-price="3" data-taxe_id="1" onClick={(e) => addProductFromCard(e)}>
                             <img className="card-img-top" src="..." alt="bullar" />
                             <p className="card-text">Bulle</p>
