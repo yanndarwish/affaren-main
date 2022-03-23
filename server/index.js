@@ -108,9 +108,13 @@ app.post("/sales/:sale_id/product", async (req, res) => {
             product_name,
             product_price,
             product_quantity,
-            product_taxe
+            product_taxe,
+            sale_year,
+            sale_month,
+            sale_day
         } = req.body;
-        const newProduct = await pool.query("INSERT INTO products_in_transactions (sale_id, product_id, product_name, product_price, quantity, taxe_id, sale_day, sale_month, sale_year) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *", [sale_id, product_id, product_name, product_price, product_quantity, product_taxe, dd, mm, yyyy]);
+        console.sale_day
+        const newProduct = await pool.query("INSERT INTO products_in_transactions (sale_id, product_id, product_name, product_price, quantity, taxe_id, sale_day, sale_month, sale_year) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *", [sale_id, product_id, product_name, product_price, product_quantity, product_taxe, sale_day, sale_month, sale_year]);
         res.json(newProduct.rows[0]);
     } catch (err) {
         console.error(err.message);

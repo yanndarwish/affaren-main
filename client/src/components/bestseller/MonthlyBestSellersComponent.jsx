@@ -21,16 +21,14 @@ const MonthlyBestSellersComponent = ({selectedDate, monthlyBestSellers}) => {
     }
 
     return (
-        <div className="card mb-3 w-50">
-            <h5 className="card-header">{monthName}'s Best Sellers</h5>
-            <div className="btn-toolbar m-4">
-                <div className="btn-group">
-                    <button className="btn btn-sm btn-outline-secondary" onClick={exportMonthlyBestSellers}>Export to Excel</button>
-                </div>
+        <div className="best-seller-card card">
+            <div className="heading-section flex">
+                <h5 className="fs-500">{monthName}'s Best Sellers</h5>
+                <button className="btn btn-sm btn-outline-secondary" onClick={exportMonthlyBestSellers}>Export to Excel</button>
             </div>
             <div className="card-body">
-                <div className="text-left daily-best-sellers table-responsive">
-                    <table className="table table-striped">
+                <div>
+                    <table className="table">
                         <thead>
                             <tr>
                             <th scope="col">Product</th>

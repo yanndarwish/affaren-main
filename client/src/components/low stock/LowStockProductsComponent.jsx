@@ -2,7 +2,7 @@ import React from "react";
 
 const LowStockProductsComponent = ({lowStockProducts}) => {
     return (
-        <div className="text-left low-stock-products table-responsive">
+        <div className="container">
             <table className="table table-striped">
                 <thead>
                     <tr>

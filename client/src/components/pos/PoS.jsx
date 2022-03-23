@@ -2,6 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react';
 import CartComponent from './CartComponent';
 import TaxeComponent from './TaxeComponent';
 import ip from '../../ip'
+import printer from '../../printer'
+printer()
 
 // get year
 let date = new Date();
@@ -35,6 +37,8 @@ const PoS = () => {
     let [paid, setPaid] = useState(0);
 
 
+
+    
     //get last sale transaction id, if sale_paid is true, then create a new sale transaction
     const getLastSale = async () => {
         try {
@@ -96,10 +100,13 @@ const PoS = () => {
                 product_price: noBarcodePrice,
                 product_quantity: parseInt(noBarcodeQuantity),
                 product_barcode: '',
-                product_taxe: noBarcodeTaxe
+                product_taxe: parseInt(noBarcodeTaxe)
             }
             setProducts([...products, newProduct]);
+            console.log(noBarcodeName)
             noBarcodeName = '';
+            console.log(noBarcodeName)
+
             noBarcodePrice = '';
             noBarcodeQuantity = '';
             noBarcodeTaxe = '';
@@ -324,75 +331,76 @@ const PoS = () => {
 
 
     // CLOSING TRANSACTION
-
     //close transaction
     const closeTransaction = async () => {
-        const paidValue = parseFloat(document.getElementById('left-to-pay').value)
-        //set paid state += paid value
-        paid += Math.round(paidValue *100)/100;
-        leftToPay = Math.round((total - paid) * 100) / 100;
-        const checked = document.querySelector('input[name="payment-method"]:checked').value;
+        if(total > 0) {
+            const paidValue = parseFloat(document.getElementById('left-to-pay').value)
+            //set paid state += paid value
+            paid += Math.round(paidValue *100)/100;
+            leftToPay = Math.round((total - paid) * 100) / 100;
+            const checked = document.querySelector('input[name="payment-method"]:checked').value;
 
-        //if editing(true) delete ewerything from the products_in_transactions before adding new products
-        if (editing) {
-            try {
-                const response = await fetch(`http://${ip}:5000/reset/sales/${saleId}`, {
-                    method: 'PUT'
-                });
-                const data = await response.json();
-            } catch (err) {
-                console.error(err.message)
+            //if editing(true) delete ewerything from the products_in_transactions before adding new products
+            if (editing) {
+                try {
+                    const response = await fetch(`http://${ip}:5000/reset/sales/${saleId}`, {
+                        method: 'PUT'
+                    });
+                    const data = await response.json();
+                } catch (err) {
+                    console.error(err.message)
+                }
             }
-        }
 
-        if (leftToPay !== 0 && leftToPay > 0) {
-            try {
-                const splittedPaiment = await fetch(`http://${ip}:5000/close/sales/${saleId}/split`, {
-                    method: 'PUT',
+            if (leftToPay !== 0 && leftToPay > 0) {
+                try {
+                    const splittedPaiment = await fetch(`http://${ip}:5000/close/sales/${saleId}/split`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            payment_method_id_2: checked,
+                            payment_method_id_2_total: paid
+                        })
+                    })
+                } catch (err) {
+                    console.error(err.message)
+                }
+                setPaid(paid)
+            }
+            if (leftToPay <= 0) {
+                if (paidValue > leftToPay) {
+                    alert('Change : ' + Math.abs(leftToPay) + ' €')
+                }
+                try {
+                    console.log('close transaction');
+                    setAccounting()
+                    addProductsInTransaction()
+                    updateStock();
+                    const close = await fetch(`http://${ip}:5000/close/sales/${saleId}`, {
+                        method: 'PUT',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        payment_method_id_2: checked,
-                        payment_method_id_2_total: paid
+                        paid: checked
                     })
-                })
-            } catch (err) {
-                console.error(err.message)
+                    });
+                    const closeData = await close.json();
+                    alert('Transaction closed');
+                    window.location.reload();
+                    // setPaymentMethod()
+                }
+                catch (err) {
+                    console.error(err.message);
+                }
+                if (editing) {
+                    deleteNull()
+                }
             }
-            setPaid(paid)
+            setEditing(false)
         }
-        if (leftToPay <= 0) {
-            if (paidValue > leftToPay) {
-                alert('Change : ' + Math.abs(leftToPay) + ' €')
-            }
-            try {
-                console.log('close transaction');
-                setAccounting()
-                addProductsInTransaction()
-                updateStock();
-                const close = await fetch(`http://${ip}:5000/close/sales/${saleId}`, {
-                    method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    paid: checked
-                })
-                });
-                const closeData = await close.json();
-                alert('Transaction closed');
-                window.location.reload();
-                // setPaymentMethod()
-            }
-            catch (err) {
-                console.error(err.message);
-            }
-            if (editing) {
-                deleteNull()
-            }
-        }
-        setEditing(false)
     }
 
     // Close Stock update
@@ -419,7 +427,7 @@ const PoS = () => {
             }
         }
     }
-
+    console.log(time.day)
     // Set all the accounting info in the database
     const setAccounting = async () => {
         try {
@@ -463,7 +471,10 @@ const PoS = () => {
                     product_name: products[i].product_name,
                     product_quantity: products[i].product_quantity,
                     product_price: products[i].product_price,
-                    product_taxe: products[i].product_taxe
+                    product_taxe: products[i].product_taxe,
+                    sale_year: time[`year`],
+                    sale_month: String(time[`month`]),
+                    sale_day: String(time[`day`])
                 }
                 const sendProducts = await fetch(`http://${ip}:5000/sales/${saleId}/product`, {
                     method: 'POST',
@@ -478,73 +489,117 @@ const PoS = () => {
         }
     }
 
+    const toggleModal = (e) => {
+        console.log(e.target.dataset.toggle)
+        const modal = document.querySelector(`.${e.target.dataset.toggle}`)
+        const modalToggle = document.querySelector(`.${e.target.dataset.toggle}-toggle`)
+        const modalDialog = document.querySelector(`.${e.target.dataset.toggle}-dialog`)
+
+        if(e.target.dataset.action === "payment") {
+            payment()
+        } else if (e.target.dataset.action === "close_transaction") {
+            closeTransaction()
+        } else if (e.target.dataset.action === "clear_cart") {
+            clearTransaction()
+        } else if (e.target.dataset.action === "add_no_barcode_product") {
+            addNoBarcodeProduct()
+        }
+
+        const visibility = modal.getAttribute("data-visible")
+        if (visibility === "false") {
+            modal.setAttribute("data-visible", true)
+            modal.setAttribute("aria-hidden", false)
+            modalToggle.setAttribute("aria-expanded", true)
+            modalDialog.setAttribute("data-visible", true)
+        } else {
+            modal.setAttribute("data-visible", false)
+            modal.setAttribute("aria-hidden", true)
+            modalToggle.setAttribute("aria-expanded", false)
+            modalDialog.setAttribute("data-visible", false)
+        }
+    }
+
+    const receipt = () => {
+        //clear local storage
+        localStorage.clear()
+        console.log(taxes)
+        console.log(products)
+        //add to local storage
+        localStorage.setItem('taxes', JSON.stringify(taxes))
+        localStorage.setItem('receipt', JSON.stringify({
+            products: products,
+
+            total: total,
+            time: time,
+            saleId: saleId
+        }))
+
+    }
+
 
 
     return (
         <Fragment>
             <div className="grid-container grid-container--pos">
-                <div className="col-md-8">
-                    <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                        <h1 className="h2">Point Of Sale</h1>
-                        <div className="btn-toolbar mb-2 mb-md-0">
-                            <div className="btn-toolbar input-group input-group-sm mb-2 mb-md-0">
-                                <input type="number" className="form-control" placeholder="ID" aria-label="Sale ID to edit" id="edit-sale-id" onChange={editOnChange}/>
-                                <div className="input-group-append">
-                                    <button id="edit-btn" className="btn btn-sm btn-outline-dark" type="button" onClick={editTransaction}>Edit Sale</button>
-                                </div>
-                            </div>
+                <div>
+                    <div className="heading-section flex">
+                        <h1 className="fs-700">Sale n° {saleId}</h1>
+                        <div className="flex">
+                            <input type="number" placeholder="ID" aria-label="Sale ID to edit" id="edit-sale-id" onChange={editOnChange}/>
+                            <button id="edit-btn" className="btn btn-sm btn-outline-dark" type="button" onClick={editTransaction}>Edit Sale</button>
                         </div>
                     </div>
-                    <h3 className={saleId}>Sale number : {saleId}</h3>
-                    <div className="input-group mt-5 mb-3">
-                        <input className="form-control" value={barcode} onChange={e => setBarcode((e.target.value))} placeholder='Enter barcode' autoFocus id='barcode-input'/>
-                        {/* no barcode product */}
-                        <button type="button" className="btn btn-outline-dark" data-toggle="modal" data-target="#withoutBarcodeModal">
-                            No barcode
-                        </button>
+                    <div className="container">
+                        <div className="flex barcode-section">
+                            <input className="form-control" value={barcode} onChange={e => setBarcode((e.target.value))} placeholder='Enter barcode' autoFocus id='barcode-input'/>
+                            {/* no barcode product */}
+                            <button type="button" className="btn no-barcode-modal-toggle" data-toggle="no-barcode-modal" aria-expanded="false" onClick={(e) => toggleModal(e)}>
+                                No barcode
+                            </button>
+                        </div>
                     {/* no barcode product modal */}
-                        <div className="modal fade" id="withoutBarcodeModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                <div className="modal-content">
+                        <div className="modal no-barcode-modal" role="dialog" data-visible="false" aria-hidden="true">
+                            <div className="no-barcode-modal-dialog modal-dialog" role="document" data-visible="false">
+                                <div>
                                     <div className="modal-header">
-                                        <h5 className="modal-title" id="exampleModalLabel">No Barcode Product</h5>
-                                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
+                                        <h5 className="fs-500">No Barcode Product</h5>
+                                        <button type="button" className="close" data-toggle="no-barcode-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
+                                            <span aria-hidden="true" data-toggle="no-barcode-modal">&times;</span>
                                         </button>
                                     </div>
                                     <div className="modal-body">
-                                        <div className="input-group mb-3">
-                                            <div className="input-group-prepend">
-                                                <span className="input-group-text">Name</span>
+                                        <div className="grid">
+                                            <div>
+                                                <span>Name</span>
                                             </div>
-                                            <input type="text" className="form-control" aria-label="Default" aria-describedby="no-barcode-name" id="no-barcode-name"/>
-                                            <div className="input-group-prepend">
-                                                <span className="input-group-text" >Price</span>
+                                            <input type="text" aria-describedby="no-barcode-name" id="no-barcode-name"/>
+                                            <div>
+                                                <span>Price</span>
                                             </div>
-                                            <input type="number" step="0.05" className="form-control" aria-label="Default" aria-describedby="no-barcode-price" id="no-barcode-price"/>
-                                            <div className="input-group-prepend">
-                                                <span className="input-group-text">Quantity</span>
+                                            <input type="number" step="0.05" aria-describedby="no-barcode-price" id="no-barcode-price"/>
+                                            <div>
+                                                <span>Quantity</span>
                                             </div>
-                                            <input type="number" className="form-control" aria-label="Default" aria-describedby="no-barcode-quantity" id="no-barcode-quantity"/>
-                                            <div className="input-group-prepend">
-                                                <label className="input-group-text" htmlFor="no-barcode-taxe">Taxe</label>
+                                            <input type="number" aria-describedby="no-barcode-quantity" id="no-barcode-quantity"/>
+                                            <div>
+                                                <span>Taxe</span>
                                             </div>
-                                            <select className="custom-select" id="no-barcode-taxe">
+                                            <select id="no-barcode-taxe">
                                                 <option defaultValue="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="modal-footer">
-                                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" className="btn btn-outline-success" onClick={addNoBarcodeProduct} data-dismiss="modal">Add Product</button>
+                                    <div className="modal-footer flex">
+                                        <button type="button" className="btn btn-secondary" data-toggle="no-barcode-modal" onClick={(e) => toggleModal(e)}>Close</button>
+                                        <button type="button" className="btn btn-outline-success" data-toggle="no-barcode-modal" data-action="add_no_barcode_product" onClick={(e) => toggleModal(e)}>Add Product</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="row justify-content-between">
+                    <div className="card-container flex">
                         <div className="card" style={{"zIndex":"1"}} data-id="1132" data-name="Bulle" data-price="3" data-taxe_id="1" onClick={(e) => addProductFromCard(e)}>
                             <img className="card-img-top" src="..." alt="bullar" />
                             <p className="card-text">Bulle</p>
@@ -563,97 +618,99 @@ const PoS = () => {
                         </div>
                     </div>
                 </div>
-                <div className='col-md-4 cart-container p-2 d-flex flex-column justify-content-between'>
-                    <div className='cart-header d-flex justify-content-between align-items-center mb-5'>
-                        <h3>Cart</h3>
+                <div className='grid-container cart-container'>
+                    <div className='cart-header flex'>
+                        <h3 className="fs-600">Cart</h3>
                         {/* Clear the cart */}
-                        <button type="button" className="btn btn-outline-danger" data-toggle="modal" data-target="#clearCart">
-                            <i className="fas fa-times"></i>
+                        <button type="button" className="btn clear-cart-modal-toggle" data-toggle="clear-cart-modal" aria-expanded="false" onClick={(e) => toggleModal(e)}>
+                            <i className="fas fa-times clear-cart-modal-toggle" data-toggle="clear-cart-modal"></i>
                         </button>
 
                         {/* Clear the cart Modal */}
-                        <div className="modal fade" id="clearCart" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLabel">Clear Cart</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
+                        <div className="modal clear-cart-modal" id="clearCart" role="dialog" data-visible="false" aria-hidden="true">
+                            <div className="modal-dialog clear-cart-modal-dialog" role="document" data-visible="false">
+                                <div>
+                                    <div className="modal-header">
+                                        <h5 className="fs-500">Clear Cart</h5>
+                                        <button type="button" className="close" data-toggle="clear-cart-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
+                                            <span aria-hidden="true" data-toggle="clear-cart-modal">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div className="modal-body">
+                                        Are you sure you want to clear the cart ?
+                                    </div>
+                                    <div className="modal-footer flex">
+                                        <button type="button" className="btn" data-toggle="clear-cart-modal" onClick={(e) => toggleModal(e)}>Close</button>
+                                        <button type="button" className="btn" data-toggle="clear-cart-modal" data-action="clear_cart" onClick={(e) => toggleModal(e)}>Clear Cart</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="modal-body">
-                                Are you sure you want to clear the cart ?
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-outline-danger" onClick={clearTransaction} data-dismiss="modal">Clear Cart</button>
-                            </div>
-                            </div>
-                        </div>
                         </div>
                     </div>
-                    <div className="cart d-flex flex-column">
-                        {products.length > 0 ? <CartComponent products={products} setProducts={setProducts} setQtyUpdated={setQtyUpdated}/> : <h3>Cart is empty</h3>}
-                        
+                    <div className="cart">
+                        {products.length > 0 ? <CartComponent products={products} setProducts={setProducts} setQtyUpdated={setQtyUpdated}/> : <h3>Cart is empty</h3>} 
                     </div>
                     {/* display total price */}
                     
-                    <div className='cart-total-price m-5'>
-                        <h3 className='cart-total-price font-weight-bold'>TOTAL : <span id="cart-total">{total}</span> €</h3>
+                    <div className='cart-price-container'>
+                        <h3 className='cart-total-price fs-600'>TOTAL : <span id="cart-total">{total}</span> €</h3>
 
                     
                         
-                        <div className='row justify-content-center'>
-                            <button className="btn btn-dark">Sous-total</button>
+                        <div className='grid'>
+                        <button type="button" className="btn receipt" onClick={() => receipt()}>
+                                Receipt
+                            </button>
                         {/* Pay */}
-                            <button type="button" className="btn btn-success" data-toggle="modal" data-target="#confirmModal" onClick={payment}>
+                            <button type="button" className="btn checkout-modal-toggle" data-toggle="checkout-modal" data-action="payment" onClick={(e) => toggleModal(e)} aria-expanded="false">
                                 Check Out
                             </button>
                         {/* Pay Modal */}
-                            <div className="modal fade" id="confirmModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div className="modal-dialog modal-dialog-centered" role="document">
-                                    <div className="modal-content">
+                            <div className="modal checkout-modal" role="dialog"  data-visible="false" aria-hidden="true">
+                                <div className="modal-dialog checkout-modal-dialog" role="document" data-visible="false">
+                                    <div>
                                         <div className="modal-header">
-                                            <h5 className="modal-title" id="exampleModalLabel">Confirm Payment</h5>
-                                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
+                                            <h2 className="fs-500" id="exampleModalLabel">Confirm Payment</h2>
+                                            <button type="button" className="close" data-toggle="checkout-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
+                                                <span aria-hidden="true" data-toggle="checkout-modal">&times;</span>
                                             </button>
                                         </div>
                                         <div className="modal-body">
                                             <div className="taxe-container">
                                                 {loaded ? <TaxeComponent taxesId={taxesId} taxes={taxes}/> : <div>Loading...</div>}
                                             </div>
-                                            <div className="input-group mb-3">
-                                            <input type="number" step="0.01" className="form-control" aria-label="Default" aria-describedby="left-to-pay" id="left-to-pay" placeholder="Enter amount if split payment, or click total" defaultValue={leftToPay}/>
-                                            <button type="button" className="btn btn-secondary" onClick={remaining}>
-                                                Left to Pay
-                                            </button>
+                                            <div className="flex">
+                                                <input type="number" step="0.01" aria-describedby="left-to-pay" id="left-to-pay" placeholder="Enter amount if split payment, or click total" defaultValue={leftToPay}/>
+                                                <button type="button" className="btn" onClick={remaining}>
+                                                    Left to Pay
+                                                </button>
                                             </div>
-                                            Payment Method
+                                            
                                             <div className="payment-method-container">
-                                                <div className="form-check">
-                                                    <input className="form-check-input payment-method-input" type="radio" name="payment-method" id="cash" value="1" defaultChecked />
-                                                    <label className="form-check-label" htmlFor="cash">
+                                                    <p className="fs-500">Payment Method</p>
+                                                <div>
+                                                    <input className="payment-method-input" type="radio" name="payment-method" id="cash" value="1" defaultChecked />
+                                                    <label className="form-check-label fs-500" htmlFor="cash">
                                                         Cash
                                                     </label>
                                                 </div>
-                                                <div className="form-check">
-                                                    <input className="form-check-input payment-method-input" type="radio" name="payment-method" id="card" value="2" />
-                                                    <label className="form-check-label" htmlFor="card">
+                                                <div>
+                                                    <input className="payment-method-input" type="radio" name="payment-method" id="card" value="2" />
+                                                    <label className="form-check-label fs-500" htmlFor="card">
                                                         Card
                                                     </label>
                                                 </div>
-                                                <div className="form-check">
-                                                    <input className="form-check-input payment-method-input" type="radio" name="payment-method" id="cheque" value="3" />
-                                                    <label className="form-check-label" htmlFor="cheque">
+                                                <div>
+                                                    <input className="payment-method-input" type="radio" name="payment-method" id="cheque" value="3" />
+                                                    <label className="form-check-label fs-500" htmlFor="cheque">
                                                         Cheque
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="modal-footer">
-                                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" className="btn btn-outline-success" onClick={closeTransaction} data-dismiss="modal">Confirm Transaction</button>
+                                        <div className="modal-footer flex">
+                                            <button type="button" className="btn" data-toggle="checkout-modal" onClick={(e) => toggleModal(e)}>Close</button>
+                                            <button type="button" className="btn" data-toggle="checkout-modal" data-action="close_transaction" onClick={(e) => toggleModal(e)}>Confirm Transaction</button>
                                         </div>
                                     </div>
                                 </div>

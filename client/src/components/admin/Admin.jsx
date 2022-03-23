@@ -173,21 +173,18 @@ const Admin = ()  => {
 
     
     return (
-        <div className="admin container-fluid text-center p-4">
-            <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h1 className="h2">Admin</h1>
-                <div className="btn-toolbar mb-2 mb-md-0">
-                    <div className="btn-toolbar input-group input-group-sm mb-2 mb-md-0">
-                        <input className="form-control" id="date-input" type="date" defaultValue={date} onChange={setDate}/>
-                    </div>
-                </div>
+        <div className="grid-container grid-container--admin">
+            <div className="flex heading-section">
+                <h1 className="fs-700">Admin</h1>
+                <input id="date-input" type="date" defaultValue={date} onChange={setDate}/>
             </div>
-            <div className="row justify-content-around">
+            <div className="flex admin-totals-container">
                 <MonthComponent selectedDate={selectedDate} selectedMonth={selectedMonth} sales={sales} monthlyTable={monthlyTable}/>
                 <SelectedDateComponent selectedDate={selectedDate} filteredSales={filteredSales} />
             </div>
-            {filteredSales ? <SalesComponent filteredSales={filteredSales} /> : <h3>Loading...</h3>}
-            
+            <div className="sales-container">
+                {filteredSales ? <SalesComponent filteredSales={filteredSales} /> : <h3>Loading...</h3>}
+            </div>
         </div>
     )
 }

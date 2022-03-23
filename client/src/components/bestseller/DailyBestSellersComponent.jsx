@@ -10,16 +10,14 @@ const DailyBestSellersComponent = ({selectedDate, dailyBestSellers}) => {
         XLSX.writeFile(wb, `${selectedDate} Best Sellers.xlsx`);
     }
     return (
-        <div className="card mb-3 w-50">
-            <h5 className="card-header">{selectedDate}'s Best Sellers</h5>
-            <div className="btn-toolbar m-4">
-                <div className="btn-group">
-                    <button className="btn btn-sm btn-outline-secondary" onClick={exportDailyBestSellers}>Export to Excel</button>
-                </div>
+        <div className="best-seller-card card">
+            <div className="flex heading-section">
+                <h5 className="fs-500">{selectedDate}'s Best Sellers</h5>
+                <button className="btn btn-sm btn-outline-secondary" onClick={exportDailyBestSellers}>Export to Excel</button>
             </div>
             <div className="card-body">
-                <div className="text-left daily-best-sellers table-responsive">
-                    <table className="table table-striped">
+                <div>
+                    <table className="table">
                         <thead>
                             <tr>
                             <th scope="col">Product</th>

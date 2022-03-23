@@ -116,20 +116,16 @@ const Inventory = () => {
     }, [barcode])
 
     return (
-        <div className="container-fluid text-center p-4">
-            <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h1 className="h2">Inventory</h1>
-                <div className="btn-toolbar mb-2 mb-md-0">
-                    <div className="btn-group mr-2">
-                        <button className="btn btn-sm btn-outline-secondary" onClick={changeMode}>{mode.charAt(0).toUpperCase() + mode.slice(1)}</button>
-                    </div>
-                </div>
+        <div className="grid-container grid-container--inventory">
+            <div className="flex heading-section">
+                <h1 className="fs-700">Inventory</h1>
+                <button className="btn" onClick={changeMode}>{mode.charAt(0).toUpperCase() + mode.slice(1)}</button>
             </div>
-            <div className="input-group mt-5 mb-3">
+            <div className="inventory-container">
                 <input id="inventory-input" className="form-control" placeholder="Scan Barcode" value={barcode} onChange={e => setBarcode((e.target.value))} aria-label="Search Barcode" id="barcode-input" autoFocus />
+                {product ? <DisplayProductComponent product={product} editProduct={editProduct}/> : null}
+                {newProduct ? <CreateProduct addProduct={addProduct}/> : null}
             </div>
-            {product ? <DisplayProductComponent product={product} editProduct={editProduct}/> : null}
-            {newProduct ? <CreateProduct addProduct={addProduct}/> : null}
         </div>
     )
 }

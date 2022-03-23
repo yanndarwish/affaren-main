@@ -4,38 +4,40 @@ const DisplayProductComponent = ({product, editProduct}) => {
 
 
     return (
-        <div className="product-container">
-            <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">Name</span>
+        <div className="inventory-product-container grid">
+            <div className="product-container grid">
+                <div>
+                    <div>
+                        <label className="fs-500" htmlFor="product-name">Name</label>
+                    </div>
+                    <input id="product-name" type="text" defaultValue={product.product_name} />
                 </div>
-                <input id="product-name" className="product-input form-control" type="text" defaultValue={product.product_name} />
-            </div>
-            <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">Price</span>
+                <div>
+                    <div>
+                        <label className="fs-500" htmlFor="product-price">Price</label>
+                    </div>
+                    <input id="product-price" type="text" defaultValue={product.product_price} />
                 </div>
-                <input id="product-price" className="product-input form-control" type="text" defaultValue={product.product_price} />
-            </div>
-            <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">Quantity</span>
+                <div>
+                    <div>
+                        <label className="fs-500" htmlFor="product-quantity">Quantity</label>
+                    </div>
+                    <input id="product-quantity" type="number" defaultValue={product.product_quantity} />
                 </div>
-                <input id="product-quantity" className="product-input form-control" type="number" defaultValue={product.product_quantity} />
-            </div>
-            <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">Alert</span>
+                <div>
+                    <div>
+                        <label className="fs-500" htmlFor="product-alert">Alert</label>
+                    </div>
+                    <input id="product-alert" type="number" defaultValue={product.product_alert} />
                 </div>
-                <input id="product-alert" className="product-input form-control" type="number" defaultValue={product.product_alert} />
-            </div>
-            <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">Taxe ID</span>
+                <div>
+                    <div>
+                        <label className="fs-500" htmlFor="product-taxe-id">Taxe ID</label>
+                    </div>
+                    <input id="product-taxe-id" type="number" defaultValue={product.taxe_id} />
                 </div>
-                <input id="product-taxe-id" className="product-input form-control" type="number" defaultValue={product.taxe_id} />
             </div>
-            <button className="btn btn-primary" onClick={editProduct}>Update</button>
+                <button className="btn btn-primary" onClick={editProduct}>Update</button>
         </div>
     )
 }

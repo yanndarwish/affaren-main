@@ -31,33 +31,57 @@ const MonthComponent = ({selectedDate, selectedMonth, sales, monthlyTable }) => 
         XLSX.writeFile(wb, `${months[month-1]}-${year}.xlsx`);
     }
 
+    const toggleModal = (e) => {
+        console.log(e.target.dataset.toggle)
+        const modal = document.querySelector(`.${e.target.dataset.toggle}`)
+        const modalToggle = document.querySelector(`.${e.target.dataset.toggle}-toggle`)
+        const modalDialog = document.querySelector(`.${e.target.dataset.toggle}-dialog`)
+        
+        if(e.target.dataset.action === "export") {
+            exportToExcel();
+        }
+
+        const visibility = modal.getAttribute("data-visible")
+        if (visibility === "false") {
+            modal.setAttribute("data-visible", true)
+            modal.setAttribute("aria-hidden", false)
+            modalToggle.setAttribute("aria-expanded", true)
+            modalDialog.setAttribute("data-visible", true)
+        } else {
+            modal.setAttribute("data-visible", false)
+            modal.setAttribute("aria-hidden", true)
+            modalToggle.setAttribute("aria-expanded", false)
+            modalDialog.setAttribute("data-visible", false)
+        }
+    }
+
     let monthLitteral = months[month-1];
     return (
         <div className="month mb-3">
-            <div className="card">
-                <h5 className="card-header">{monthLitteral}'s Total Income</h5>
-                <div className="card-body">
-                    <h5 className="card-title">{Math.round(total *100)/100} €</h5>
-                    <p className="card-text">This is this month's total revenue. Click below to get more details !</p>
-                    <a href="#" className="btn btn-primary" data-toggle="modal" data-target="#month-detail">See details</a>
+            <div className="admin-card grid">
+                <div className="card-header flex">
+                    <h3 className="fs-500">{monthLitteral}'s Total Income</h3>
+                    <h1 className="card-title">{Math.round(total *100)/100} €</h1>
                 </div>
+                <p className="card-text">This is this month's total revenue. Click below to get more details !</p>
+                <button className="btn month-detail-modal-toggle" data-toggle="month-detail-modal" aria-expanded="false" onClick={(e) => toggleModal(e)}>See details</button>
             </div>
 
-            <div className="modal fade" id="month-detail" tabIndex="-1" role="dialog" aria-labelledby="thisMonthTotal" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered modal-lg container-fluid" role="document">
-                    <div className="modal-content">
+            <div className="modal month-detail-modal" role="dialog" data-visible="false" aria-hidden="true">
+                <div className="modal-dialog month-detail-modal-dialog" role="document" data-visible="false">
+                    <div>
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">This Month's Total Revenue</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                            <h5 className="fs-500">This Month's Total Revenue</h5>
+                            <button type="button" data-toggle="month-detail-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
+                                <span data-toggle="month-detail-modal" aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
                             <MonthlyTableComponent monthlyTable={monthlyTable}/>
                         </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={exportToExcel}>Export To Excel</button>
+                        <div className="modal-footer flex">
+                            <button type="button" className="btn btn-secondary" data-toggle="month-detail-modal" onClick={(e) => toggleModal(e)}>Close</button>
+                            <button type="button" className="btn btn-primary" data-action="export" data-toggle="month-detail-modal" onClick={(e) => toggleModal(e)}>Export To Excel</button>
                         </div>
                     </div>
                 </div>

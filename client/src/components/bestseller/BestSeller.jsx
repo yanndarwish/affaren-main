@@ -131,16 +131,12 @@ const BestSellers = () => {
     }, [monthlyProducts])
 
     return (
-        <div className="container-fluid text-center p-4">
-            <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <div className="grid-container grid-container--best-sellers">
+            <div className="flex heading-section">
                 <h1 className="h2">Most Sold Products</h1>
-                <div className="btn-toolbar mb-2 mb-md-0">
-                    <div className="btn-toolbar input-group input-group-sm mb-2 mb-md-0">
-                        <input className="form-control" id="date-input" type="date" value={selectedDate} onChange={setDate}/>
-                    </div>
-                </div>
+                <input className="form-control" id="date-input" type="date" value={selectedDate} onChange={setDate}/>
             </div>
-            <div className="row justify-content-around">
+            <div className="best-sellers-container flex">
                 {dailyBestSellers.length > 0 ? <DailyBestSellersComponent selectedDate={selectedDate} dailyBestSellers={dailyBestSellers} /> : null }
                 {monthlyBestSellers ? <MonthlyBestSellersComponent selectedDate={selectedDate} monthlyBestSellers={monthlyBestSellers} /> : null}
             </div>

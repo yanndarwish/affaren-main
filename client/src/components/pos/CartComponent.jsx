@@ -52,20 +52,20 @@ const CartComponent = ({products, setProducts, setQtyUpdated}) => {
 
     return (
         products.map(product => (
-            <div className='row cart-item justify-content-between align-items-center border-bottom pb-2 pt-2' key={product.product_name}>
+            <div className='cart-item flex' key={product.product_name}>
                 <div className="col-1 align-items-center">
                         <i className="far fa-trash-alt" data-id={product.product_id} onClick={e => removeProduct(e)}></i>
                 </div>
-                <div className='col-4 flex-column text-left align-items-start'>
-                    <div className='cart-item-name text-left my-auto text-truncate'>{product.product_name}
+                <div className='item-infos flex'>
+                    <div className='cart-item-name'>{product.product_name}
                     </div>
                     {/* <div className='cart-item-unit-price col-1 my-auto'>{product.product_price}</div> */}
                     <div className='cart-item-total-price my-auto font-weight-bold'>{Math.round((product.product_price * product.product_quantity) * 100) / 100}
                     </div>
                 </div>
-                <div className='col-6 d-flex justify-content-between align-items-center'>
+                <div className='item-qty-container flex'>
                     <i className="fas fa-minus" data-id={product.product_id} onClick={e => substractOne(e)}></i>
-                    <input type="number" className='cart-item-quantity col-3 my-auto font-weight-bold text-center p-0' data-id={product.product_id} value={product.product_quantity} onChange={e => setQuantity(e)}/>
+                    <input type="number" className='item-qty' data-id={product.product_id} value={product.product_quantity} onChange={e => setQuantity(e)}/>
                     <i className="fas fa-plus" data-id={product.product_id} onClick={e => addOne(e)}></i>
                 </div>
             </div>

@@ -3,36 +3,38 @@ import React from "react";
 
 const CreateProduct = ( { addProduct}) => {
     return (
-        <div className="product-container">
-            <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">Name</span>
+        <div className="inventory-product-container grid">
+            <div className="product-container">
+                <div>
+                    <div>
+                        <label className="fs-500">Name</label>
+                    </div>
+                    <input id="product-name" type="text" />
                 </div>
-                <input id="product-name" className="product-input form-control" type="text" />
-            </div>
-            <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">Price</span>
+                <div>
+                    <div>
+                        <label className="fs-500">Price</label>
+                    </div>
+                    <input id="product-price" type="text" />
                 </div>
-                <input id="product-price" className="product-input form-control" type="text" />
-            </div>
-            <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">Quantity</span>
+                <div>
+                    <div>
+                        <label className="fs-500">Quantity</label>
+                    </div>
+                    <input id="product-quantity" type="number" />
                 </div>
-                <input id="product-quantity" className="product-input form-control" type="number" />
-            </div>
-            <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">Alert</span>
+                <div>
+                    <div>
+                        <label className="fs-500">Alert</label>
+                    </div>
+                    <input id="product-alert" type="number" />
                 </div>
-                <input id="product-alert" className="product-input form-control" type="number" />
-            </div>
-            <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">Taxe ID</span>
+                <div>
+                    <div>
+                        <label className="fs-500">Taxe ID</label>
+                    </div>
+                    <input id="product-taxe-id" type="number" />
                 </div>
-                <input id="product-taxe-id" className="product-input form-control" type="number" />
             </div>
             <button className="btn btn-primary" onClick={addProduct}>Add</button>
         </div>
