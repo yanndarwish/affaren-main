@@ -551,10 +551,10 @@ tr:nth-child(even) {
   z-index:-100;
   width:100vw;
   height:100vh;
-  display:flex;
   justify-content:center;
   align-items:center;
   display:none;
+  overflow-y: scroll;
 }
 
 .no-barcode-modal[data-visible="true"],
@@ -589,6 +589,15 @@ tr:nth-child(even) {
   -moz-transform: translateY(0%);
   -ms-transform: translateY(0%);
   -o-transform: translateY(0%);
+}
+
+.checkout-modal-dialog[data-visible="true"] {
+  margin-block:auto;
+  transform: scale(0.9);
+  -webkit-transform: scale(0.9);
+  -moz-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  -o-transform: scale(0.9);
 }
 
 .modal-header {

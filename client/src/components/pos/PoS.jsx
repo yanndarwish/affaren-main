@@ -407,6 +407,7 @@ const PoS = () => {
                 setTaxes([]);
                 document.getElementById('left-to-pay').value = 0;
                 getLastSale()
+                document.getElementById('barcode-input').focus()
             }
             setEditing(false)
         }
