@@ -3,7 +3,7 @@ import CartComponent from './CartComponent';
 import TaxeComponent from './TaxeComponent';
 import ip from '../../ip'
 import printer from '../../printer'
-printer()
+
 
 // get year
 let date = new Date();
@@ -35,8 +35,6 @@ const PoS = () => {
     const [loaded, setLoaded] = useState(false);
     let [leftToPay, setLeftToPay] = useState(0);
     let [paid, setPaid] = useState(0);
-
-
 
     
     //get last sale transaction id, if sale_paid is true, then create a new sale transaction
@@ -520,20 +518,7 @@ const PoS = () => {
     }
 
     const receipt = () => {
-        //clear local storage
-        localStorage.clear()
-        console.log(taxes)
-        console.log(products)
-        //add to local storage
-        localStorage.setItem('taxes', JSON.stringify(taxes))
-        localStorage.setItem('receipt', JSON.stringify({
-            products: products,
-
-            total: total,
-            time: time,
-            saleId: saleId
-        }))
-
+        printer(products, taxes, total)
     }
 
 
