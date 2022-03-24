@@ -518,7 +518,7 @@ const PoS = () => {
     }
 
     const receipt = () => {
-        printer(products, taxes, total)
+        printer(products, taxes, total, time)
     }
 
 
