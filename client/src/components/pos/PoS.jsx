@@ -655,6 +655,9 @@ const PoS = () => {
                     
                         
                         <div className='grid'>
+                        <button type="button" className="btn drawer" onClick={() => printer()}>
+                                Open Drawer
+                            </button>
                         <button type="button" className="btn receipt" onClick={() => receipt()}>
                                 Receipt
                             </button>
