@@ -134,7 +134,6 @@ const printer = async(products, taxes, total, time ) => {
                 printer.addText('Merci de votre visite et à bientôt !\n')
                 printer.addFeedLine(1)
                 printer.addCut(printer.CUT_FEED)
-                printer.addPulse(printer.DRAWER_1,printer.PULSE_100)
                 printer.send()
             }
         }
