@@ -332,7 +332,7 @@ const PoS = () => {
     //close transaction
     const closeTransaction = async () => {
         if(total > 0) {
-            const paidValue = parseFloat(document.getElementById('left-to-pay').value)
+            let paidValue = parseFloat(document.getElementById('left-to-pay').value)
             //set paid state += paid value
             paid += Math.round(paidValue *100)/100;
             leftToPay = Math.round((total - paid) * 100) / 100;
@@ -368,6 +368,7 @@ const PoS = () => {
                 setPaid(paid)
             }
             if (leftToPay <= 0) {
+                printer()
                 if (paidValue > leftToPay) {
                     alert('Change : ' + Math.abs(leftToPay) + ' €')
                 }
@@ -386,8 +387,7 @@ const PoS = () => {
                     })
                     });
                     const closeData = await close.json();
-                    alert('Transaction closed');
-                    window.location.reload();
+                    // window.location.reload();
                     // setPaymentMethod()
                 }
                 catch (err) {
@@ -396,6 +396,17 @@ const PoS = () => {
                 if (editing) {
                     deleteNull()
                 }
+                //reset everything
+                setProducts([]);
+                setTotal(0);
+                setPaid(0);
+                setLeftToPay(0);
+                setQtyUpdated(false);
+                setLoaded(false);
+                setTaxesId([]);
+                setTaxes([]);
+                document.getElementById('left-to-pay').value = 0;
+                getLastSale()
             }
             setEditing(false)
         }
