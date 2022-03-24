@@ -660,7 +660,7 @@ tr:nth-child(even) {
   position: relative;
   display:grid;
   gap:auto;
-  height:fit-content; /* this is the magic */
+  height:calc(100vh - 8rem);
   padding: 2rem 1rem;
   background-color: hsl(var(--clr-dark) / .05);
   border-radius: .5rem;
@@ -678,7 +678,7 @@ tr:nth-child(even) {
 
 .cart {
   margin-block:2rem;
-  max-height:40vh;
+  max-height:35vh;
   align-self:center;
   background-color: hsl( var(--clr-white) / .15);
   overflow-y: scroll;
