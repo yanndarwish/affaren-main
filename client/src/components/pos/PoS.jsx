@@ -33,6 +33,7 @@ const PoS = () => {
     const [taxesId, setTaxesId] = useState([]);
     const [taxes, setTaxes] = useState([]);
     const [loaded, setLoaded] = useState(false);
+    const [discountPercentage, setDiscountPercentage] = useState(1);
     let [leftToPay, setLeftToPay] = useState(0);
     let [paid, setPaid] = useState(0);
 
@@ -513,6 +514,8 @@ const PoS = () => {
             clearTransaction()
         } else if (e.target.dataset.action === "add_no_barcode_product") {
             addNoBarcodeProduct()
+        } else if(e.target.dataset.action === "add-discount") {
+            discount()
         }
 
         const visibility = modal.getAttribute("data-visible")
@@ -527,6 +530,33 @@ const PoS = () => {
             modalToggle.setAttribute("aria-expanded", false)
             modalDialog.setAttribute("data-visible", false)
         }
+    }
+
+    const toggleAllCheckboxes = (e) => {
+        const checkboxes = document.querySelector('.product-discount-container').querySelectorAll('input[type="checkbox"]')
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = e.target.checked
+            })
+    }
+
+    const discount = () => {
+        const discountAmount = document.getElementById('discount-amount').value
+        let discountOperator = discountPercentage - (discountAmount / 100)
+        const checkboxes = document.querySelector('.product-discount-container').querySelectorAll('input[type="checkbox"]')
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                const index = checkbox.dataset.index
+                console.log(index)
+                const product = products[index]
+                const newProduct = {
+                    ...product,
+                    product_price: Math.round((product.product_price * discountOperator)* 100) / 100
+                }
+                products[index] = newProduct
+            }
+        })
+        setProducts(products)
+        setQtyUpdated(true)
     }
 
     const receipt = () => {
@@ -655,12 +685,57 @@ const PoS = () => {
                     
                         
                         <div className='grid'>
-                        <button type="button" className="btn drawer" onClick={() => printer()}>
-                                Open Drawer
-                            </button>
-                        <button type="button" className="btn receipt" onClick={() => receipt()}>
-                                Receipt
-                            </button>
+                            <div className='cart-button-container flex'>
+                                <button type="button" className="btn drawer" onClick={() => printer()}>
+                                    Open Drawer
+                                </button>
+                                <button type="button" className="btn receipt" onClick={() => receipt()}>
+                                    Receipt
+                                </button>
+                                <button type="button" className="btn discount-modal-toggle" data-toggle="discount-modal" onClick={(e) => toggleModal(e)} aria-expanded="false">
+                                    Discount
+                                </button>
+                                <div className="modal discount-modal" role="dialog"  data-visible="false" aria-hidden="true">
+                                <div className="modal-dialog discount-modal-dialog" role="document" data-visible="false">
+                                    <div>
+                                        <div className="modal-header">
+                                            <h2 className="fs-500">Add Discount</h2>
+                                            <button type="button" className="close" data-toggle="discount-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
+                                                <span aria-hidden="true" data-toggle="discount-modal">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div className="modal-body">
+                                            
+                                            <div className="flex">
+                                                <input type="number" aria-describedby="discount amount" id="discount-amount" placeholder="Discount percentage"/>
+                                            </div>
+                                            <div className="btn btn-discount-container flex">
+                                                <input type="checkbox" id="discount-all" onClick={(e) => toggleAllCheckboxes(e)} />
+                                                <label htmlFor="discount-all" className="fs-500">Apply to all products</label>
+                                            </div>
+                                            <div className="product-discount-container">
+                                                {/* create a checkbox for each product */}
+                                                {products.map((product, index) => {
+                                                    return (
+                                                        <div className="product-discount-checkbox flex" key={index}>
+                                                            <input type="checkbox" id={product.product_id} name={product.product_name} data-index={index} value={product.product_name}/> 
+                                                            <p>{product.product_name}</p>
+                                                            <p>{product.product_quantity}</p>
+                                                            <p>{product.product_price}</p>
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                        <div className="modal-footer flex">
+                                            <button type="button" className="btn" data-toggle="discount-modal" onClick={(e) => toggleModal(e)}>Close</button>
+                                            <button type="button" className="btn" data-toggle="discount-modal" data-action="add-discount" onClick={(e) => toggleModal(e)}>Apply Discount</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        
                         {/* Pay */}
                             <button type="button" className="btn checkout-modal-toggle" data-toggle="checkout-modal" data-action="payment" onClick={(e) => toggleModal(e)} aria-expanded="false">
                                 Check Out
@@ -670,7 +745,7 @@ const PoS = () => {
                                 <div className="modal-dialog checkout-modal-dialog" role="document" data-visible="false">
                                     <div>
                                         <div className="modal-header">
-                                            <h2 className="fs-500" id="exampleModalLabel">Confirm Payment</h2>
+                                            <h2 className="fs-500">Confirm Payment</h2>
                                             <button type="button" className="close" data-toggle="checkout-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
                                                 <span aria-hidden="true" data-toggle="checkout-modal">&times;</span>
                                             </button>

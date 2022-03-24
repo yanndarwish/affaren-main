@@ -561,7 +561,8 @@ tr:nth-child(even) {
 .no-barcode-modal[data-visible="true"],
 .clear-cart-modal[data-visible="true"],
 .checkout-modal[data-visible="true"],
-.month-detail-modal[data-visible="true"] {
+.month-detail-modal[data-visible="true"],
+.discount-modal[data-visible="true"] {
   z-index:100;
   display:flex;
 }
@@ -584,7 +585,8 @@ tr:nth-child(even) {
 .no-barcode-modal-dialog[data-visible="true"],
 .clear-cart-modal-dialog[data-visible="true"],
 .checkout-modal-dialog[data-visible="true"],
-.month-detail-modal-dialog[data-visible="true"] {
+.month-detail-modal-dialog[data-visible="true"],
+.discount-modal-dialog[data-visible="true"] {
   transform: translateY(0%);
   -webkit-transform: translateY(0%);
   -moz-transform: translateY(0%);
