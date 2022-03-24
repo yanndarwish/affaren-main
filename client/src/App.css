@@ -729,3 +729,22 @@ tr:nth-child(even) {
 .cart-price-container > .cart-total-price {
   margin-bottom:2rem;
 }
+
+.cart-button-container {
+  gap:0;
+  justify-content: space-evenly;
+}
+
+.cart-button-container > * {
+  font-size: 0.9rem;
+}
+
+.btn-discount-container {
+  justify-content: flex-start;
+  align-items:center;
+  margin-bottom:1rem;
+}
+
+.product-discount-checkbox {
+  justify-content: space-between;
+}

@@ -713,7 +713,7 @@ const PoS = () => {
                                                 <input type="checkbox" id="discount-all" onClick={(e) => toggleAllCheckboxes(e)} />
                                                 <label htmlFor="discount-all" className="fs-500">Apply to all products</label>
                                             </div>
-                                            <div className="product-discount-container">
+                                            <div className="product-discount-container grid">
                                                 {/* create a checkbox for each product */}
                                                 {products.map((product, index) => {
                                                     return (
