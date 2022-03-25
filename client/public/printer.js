@@ -22,8 +22,6 @@ const printer = async(products, taxes, total, time ) => {
     function callback_createDevice (obj, err) {
         
         if (obj) {
-            console.log(products === undefined)
-            console.log(arguments.length)
             printer = obj
             if (products === undefined) {
                 printer.addPulse(printer.DRAWER_1,printer.PULSE_100)
@@ -36,7 +34,9 @@ const printer = async(products, taxes, total, time ) => {
                 printer.addFeedLine(1)
                 printer.addTextSize(2,2)
                 printer.addText('AFFÄREN')
+                printer.addFeedLine(1)
                 printer.addTextSize(1,1)
+                printer.addText('Välkommen')
                 printer.addFeedLine(2)
                 printer.addText(address + '\n')
                 printer.addText(mail + '\n')
@@ -132,6 +132,7 @@ const printer = async(products, taxes, total, time ) => {
                 printer.addText('--------------------------------------\n')
                 printer.addFeedLine(1)
                 printer.addText('Merci de votre visite et à bientôt !\n')
+                printer.addText('Hejdå !\n')
                 printer.addFeedLine(1)
                 printer.addCut(printer.CUT_FEED)
                 printer.send()
