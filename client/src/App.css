@@ -183,12 +183,10 @@ body {
   font-family: var(--ff-sans-cond);
   font-size: var(--fs-400);
   color: hsl( var(--clr-dark));
-  background-image: url(./assets/shared/Neon-02.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
   background-color: hsl(var(--clr-white) / .05);
-  backdrop-filter: blur(1.5rem);
   line-height: 1.5;
   min-height:100vh;
   display:grid;
