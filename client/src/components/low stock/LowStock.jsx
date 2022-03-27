@@ -36,7 +36,7 @@ const LowStock = () => {
         <div className="grid-container grid-container--low-stock">
             <div className="flex heading-section">
                 <h1 className="fs-700">Items to Order</h1>
-                <button className="btn btn-sm btn-outline-secondary" onClick={exportToExcel}>Export to Excel</button>
+                <button className="btn btn-outline-success" onClick={exportToExcel}>Export to Excel</button>
             </div>
 
             <LowStockProductsComponent lowStockProducts={lowStockProducts}/>

@@ -37,7 +37,7 @@ const DisplayProductComponent = ({product, editProduct}) => {
                     <input id="product-taxe-id" type="number" defaultValue={product.taxe_id} />
                 </div>
             </div>
-                <button className="btn btn-primary" onClick={editProduct}>Update</button>
+                <button className="btn btn-outline-success" onClick={editProduct}>Update</button>
         </div>
     )
 }

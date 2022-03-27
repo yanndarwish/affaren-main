@@ -119,7 +119,7 @@ const Inventory = () => {
         <div className="grid-container grid-container--inventory">
             <div className="flex heading-section">
                 <h1 className="fs-700">Inventory</h1>
-                <button className="btn" onClick={changeMode}>{mode.charAt(0).toUpperCase() + mode.slice(1)}</button>
+                <button className="btn btn-outline-neutral" onClick={changeMode}>{mode.charAt(0).toUpperCase() + mode.slice(1)}</button>
             </div>
             <div className="inventory-container">
                 <input id="inventory-input" className="form-control" placeholder="Scan Barcode" value={barcode} onChange={e => setBarcode((e.target.value))} aria-label="Search Barcode" id="barcode-input" autoFocus />

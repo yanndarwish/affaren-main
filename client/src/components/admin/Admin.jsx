@@ -178,7 +178,7 @@ const Admin = ()  => {
                 <h1 className="fs-700">Admin</h1>
                 <input id="date-input" type="date" defaultValue={date} onChange={setDate}/>
             </div>
-            <div className="flex admin-totals-container">
+            <div className="admin-totals-container flex">
                 <MonthComponent selectedDate={selectedDate} selectedMonth={selectedMonth} sales={sales} monthlyTable={monthlyTable}/>
                 <SelectedDateComponent selectedDate={selectedDate} filteredSales={filteredSales} />
             </div>

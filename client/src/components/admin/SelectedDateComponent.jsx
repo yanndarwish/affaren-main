@@ -10,7 +10,7 @@ const SelectedDateComponent = ({filteredSales, selectedDate}) => {
     let month = selectedDate.slice(5,7);
     let year = selectedDate.slice(0,4);
     return (
-        <div className="admin-card grid">
+        <div className="admin-card card grid">
             <div className="card-header flex">
                 <h3 className="fs-500">{day + '/' + month + '/' + year}'s Total Income</h3>
                 <h1 className="card-title">{Math.round(filteredSalesTotal*100)/100} €</h1>

@@ -1,4 +1,3 @@
-
 const printer = async(products, taxes, total, time ) => {
 
     let sdk = new epson.ePOSDevice();

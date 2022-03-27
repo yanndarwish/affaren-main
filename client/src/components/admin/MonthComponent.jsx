@@ -57,14 +57,14 @@ const MonthComponent = ({selectedDate, selectedMonth, sales, monthlyTable }) => 
 
     let monthLitteral = months[month-1];
     return (
-        <div className="month mb-3">
-            <div className="admin-card grid">
+        <div className="month">
+            <div className="admin-card card grid">
                 <div className="card-header flex">
                     <h3 className="fs-500">{monthLitteral}'s Total Income</h3>
                     <h1 className="card-title">{Math.round(total *100)/100} €</h1>
                 </div>
                 <p className="card-text">This is this month's total revenue. Click below to get more details !</p>
-                <button className="btn month-detail-modal-toggle" data-toggle="month-detail-modal" aria-expanded="false" onClick={(e) => toggleModal(e)}>See details</button>
+                <button className="btn btn-outline-neutral month-detail-modal-toggle" data-toggle="month-detail-modal" aria-expanded="false" onClick={(e) => toggleModal(e)}>See details</button>
             </div>
 
             <div className="modal month-detail-modal" role="dialog" data-visible="false" aria-hidden="true">
@@ -72,7 +72,7 @@ const MonthComponent = ({selectedDate, selectedMonth, sales, monthlyTable }) => 
                     <div>
                         <div className="modal-header">
                             <h5 className="fs-500">This Month's Total Revenue</h5>
-                            <button type="button" data-toggle="month-detail-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
+                            <button className="btn close-btn" type="button" data-toggle="month-detail-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
                                 <span data-toggle="month-detail-modal" aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -80,8 +80,8 @@ const MonthComponent = ({selectedDate, selectedMonth, sales, monthlyTable }) => 
                             <MonthlyTableComponent monthlyTable={monthlyTable}/>
                         </div>
                         <div className="modal-footer flex">
-                            <button type="button" className="btn btn-secondary" data-toggle="month-detail-modal" onClick={(e) => toggleModal(e)}>Close</button>
-                            <button type="button" className="btn btn-primary" data-action="export" data-toggle="month-detail-modal" onClick={(e) => toggleModal(e)}>Export To Excel</button>
+                            <button type="button" className="btn btn-outline-danger" data-toggle="month-detail-modal" onClick={(e) => toggleModal(e)}>Close</button>
+                            <button type="button" className="btn btn-outline-success" data-action="export" data-toggle="month-detail-modal" onClick={(e) => toggleModal(e)}>Export To Excel</button>
                         </div>
                     </div>
                 </div>

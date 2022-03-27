@@ -36,7 +36,7 @@ const CreateProduct = ( { addProduct}) => {
                     <input id="product-taxe-id" type="number" />
                 </div>
             </div>
-            <button className="btn btn-primary" onClick={addProduct}>Add</button>
+            <button className="btn btn-outline-success" onClick={addProduct}>Add</button>
         </div>
     )
 }

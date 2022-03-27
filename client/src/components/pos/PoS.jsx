@@ -570,17 +570,17 @@ const PoS = () => {
             <div className="grid-container grid-container--pos">
                 <div>
                     <div className="heading-section flex">
-                        <h1 className="fs-700">Sale n° {saleId}</h1>
+                        <h1 className="fs-700 ff-source">Sale n° {saleId}</h1>
                         <div className="flex">
                             <input type="number" placeholder="ID" aria-label="Sale ID to edit" id="edit-sale-id" onChange={editOnChange}/>
-                            <button id="edit-btn" className="btn btn-sm btn-outline-dark" type="button" onClick={editTransaction}>Edit Sale</button>
+                            <button id="edit-btn" className="btn btn-outline-neutral" type="button" onClick={editTransaction}>Edit Sale</button>
                         </div>
                     </div>
                     <div className="container">
                         <div className="flex barcode-section">
                             <input className="form-control" value={barcode} onChange={e => setBarcode((e.target.value))} placeholder='Enter barcode' autoFocus id='barcode-input'/>
                             {/* no barcode product */}
-                            <button type="button" className="btn no-barcode-modal-toggle" data-toggle="no-barcode-modal" aria-expanded="false" onClick={(e) => toggleModal(e)}>
+                            <button type="button" className="btn btn-outline-neutral no-barcode-modal-toggle" data-toggle="no-barcode-modal" aria-expanded="false" onClick={(e) => toggleModal(e)}>
                                 No barcode
                             </button>
                         </div>
@@ -590,7 +590,7 @@ const PoS = () => {
                                 <div>
                                     <div className="modal-header">
                                         <h5 className="fs-500">No Barcode Product</h5>
-                                        <button type="button" className="close" data-toggle="no-barcode-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
+                                        <button type="button" className="close-btn" data-toggle="no-barcode-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
                                             <span aria-hidden="true" data-toggle="no-barcode-modal">&times;</span>
                                         </button>
                                     </div>
@@ -619,7 +619,7 @@ const PoS = () => {
                                         </div>
                                     </div>
                                     <div className="modal-footer flex">
-                                        <button type="button" className="btn btn-secondary" data-toggle="no-barcode-modal" onClick={(e) => toggleModal(e)}>Close</button>
+                                        <button type="button" className="btn btn-outline-danger" data-toggle="no-barcode-modal" onClick={(e) => toggleModal(e)}>Close</button>
                                         <button type="button" className="btn btn-outline-success" data-toggle="no-barcode-modal" data-action="add_no_barcode_product" onClick={(e) => toggleModal(e)}>Add Product</button>
                                     </div>
                                 </div>
@@ -647,10 +647,10 @@ const PoS = () => {
                 </div>
                 <div className='grid-container cart-container'>
                     <div className='cart-header flex'>
-                        <h3 className="fs-600">Cart</h3>
+                        <h3 className="fs-600 ff-source">Cart</h3>
                         {/* Clear the cart */}
-                        <button type="button" className="btn clear-cart-modal-toggle" data-toggle="clear-cart-modal" aria-expanded="false" onClick={(e) => toggleModal(e)}>
-                            <i className="fas fa-times clear-cart-modal-toggle" data-toggle="clear-cart-modal"></i>
+                        <button type="button" className="btn clear-cart-modal-toggle close-btn" data-toggle="clear-cart-modal" aria-expanded="false" onClick={(e) => toggleModal(e)}>
+                            <i className="fas fa-times close-icon clear-cart-modal-toggle" data-toggle="clear-cart-modal"></i>
                         </button>
 
                         {/* Clear the cart Modal */}
@@ -659,7 +659,7 @@ const PoS = () => {
                                 <div>
                                     <div className="modal-header">
                                         <h5 className="fs-500">Clear Cart</h5>
-                                        <button type="button" className="close" data-toggle="clear-cart-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
+                                        <button type="button" className="close-btn" data-toggle="clear-cart-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
                                             <span aria-hidden="true" data-toggle="clear-cart-modal">&times;</span>
                                         </button>
                                     </div>
@@ -667,8 +667,8 @@ const PoS = () => {
                                         Are you sure you want to clear the cart ?
                                     </div>
                                     <div className="modal-footer flex">
-                                        <button type="button" className="btn" data-toggle="clear-cart-modal" onClick={(e) => toggleModal(e)}>Close</button>
-                                        <button type="button" className="btn" data-toggle="clear-cart-modal" data-action="clear_cart" onClick={(e) => toggleModal(e)}>Clear Cart</button>
+                                        <button type="button" className="btn btn-outline-danger" data-toggle="clear-cart-modal" onClick={(e) => toggleModal(e)}>Close</button>
+                                        <button type="button" className="btn btn-outline-success" data-toggle="clear-cart-modal" data-action="clear_cart" onClick={(e) => toggleModal(e)}>Clear Cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -680,19 +680,19 @@ const PoS = () => {
                     {/* display total price */}
                     
                     <div className='cart-price-container'>
-                        <h3 className='cart-total-price fs-600'>TOTAL : <span id="cart-total">{total}</span> €</h3>
+                        <h3 className='cart-total-price fs-600 ff-source'>TOTAL : <span id="cart-total">{total}</span> €</h3>
 
                     
                         
                         <div className='grid'>
                             <div className='cart-button-container flex'>
-                                <button type="button" className="btn drawer" onClick={() => printer()}>
-                                    Open Drawer
+                                <button type="button" className="btn btn-outline-neutral drawer" onClick={() => printer()}>
+                                    Drawer
                                 </button>
-                                <button type="button" className="btn receipt" onClick={() => receipt()}>
+                                <button type="button" className="btn btn-outline-neutral receipt" onClick={() => receipt()}>
                                     Receipt
                                 </button>
-                                <button type="button" className="btn discount-modal-toggle" data-toggle="discount-modal" onClick={(e) => toggleModal(e)} aria-expanded="false">
+                                <button type="button" className="btn btn-outline-neutral discount-modal-toggle" data-toggle="discount-modal" onClick={(e) => toggleModal(e)} aria-expanded="false">
                                     Discount
                                 </button>
                                 <div className="modal discount-modal" role="dialog"  data-visible="false" aria-hidden="true">
@@ -700,7 +700,7 @@ const PoS = () => {
                                     <div>
                                         <div className="modal-header">
                                             <h2 className="fs-500">Add Discount</h2>
-                                            <button type="button" className="close" data-toggle="discount-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
+                                            <button type="button" className="close-btn" data-toggle="discount-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
                                                 <span aria-hidden="true" data-toggle="discount-modal">&times;</span>
                                             </button>
                                         </div>
@@ -709,7 +709,7 @@ const PoS = () => {
                                             <div className="flex">
                                                 <input type="number" aria-describedby="discount amount" id="discount-amount" placeholder="Discount percentage"/>
                                             </div>
-                                            <div className="btn btn-discount-container flex">
+                                            <div className="btn btn-discount-container btn-outline-neutral flex">
                                                 <input type="checkbox" id="discount-all" onClick={(e) => toggleAllCheckboxes(e)} />
                                                 <label htmlFor="discount-all" className="fs-500">Apply to all products</label>
                                             </div>
@@ -717,7 +717,7 @@ const PoS = () => {
                                                 {/* create a checkbox for each product */}
                                                 {products.map((product, index) => {
                                                     return (
-                                                        <div className="product-discount-checkbox flex" key={index}>
+                                                        <div className="product-discount-checkbox flex fs-400" key={index}>
                                                             <input type="checkbox" id={product.product_id} name={product.product_name} data-index={index} value={product.product_name}/> 
                                                             <p>{product.product_name}</p>
                                                             <p>{product.product_quantity}</p>
@@ -728,8 +728,8 @@ const PoS = () => {
                                             </div>
                                         </div>
                                         <div className="modal-footer flex">
-                                            <button type="button" className="btn" data-toggle="discount-modal" onClick={(e) => toggleModal(e)}>Close</button>
-                                            <button type="button" className="btn" data-toggle="discount-modal" data-action="add-discount" onClick={(e) => toggleModal(e)}>Apply Discount</button>
+                                            <button type="button" className="btn btn-outline-danger" data-toggle="discount-modal" onClick={(e) => toggleModal(e)}>Close</button>
+                                            <button type="button" className="btn btn-outline-success" data-toggle="discount-modal" data-action="add-discount" onClick={(e) => toggleModal(e)}>Apply Discount</button>
                                         </div>
                                     </div>
                                 </div>
@@ -737,7 +737,7 @@ const PoS = () => {
                             </div>
                         
                         {/* Pay */}
-                            <button type="button" className="btn checkout-modal-toggle" data-toggle="checkout-modal" data-action="payment" onClick={(e) => toggleModal(e)} aria-expanded="false">
+                            <button type="button" className="btn btn-outline-success checkout-modal-toggle" data-toggle="checkout-modal" data-action="payment" onClick={(e) => toggleModal(e)} aria-expanded="false">
                                 Check Out
                             </button>
                         {/* Pay Modal */}
@@ -745,8 +745,8 @@ const PoS = () => {
                                 <div className="modal-dialog checkout-modal-dialog" role="document" data-visible="false">
                                     <div>
                                         <div className="modal-header">
-                                            <h2 className="fs-500">Confirm Payment</h2>
-                                            <button type="button" className="close" data-toggle="checkout-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
+                                            <h2 className="fs-600">Confirm Payment</h2>
+                                            <button type="button" className="close-btn" data-toggle="checkout-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
                                                 <span aria-hidden="true" data-toggle="checkout-modal">&times;</span>
                                             </button>
                                         </div>
@@ -756,7 +756,7 @@ const PoS = () => {
                                             </div>
                                             <div className="flex">
                                                 <input type="number" step="0.01" aria-describedby="left-to-pay" id="left-to-pay" placeholder="Enter amount if split payment, or click total" defaultValue={leftToPay}/>
-                                                <button type="button" className="btn" onClick={remaining}>
+                                                <button type="button" className="btn btn-outline-neutral" onClick={remaining}>
                                                     Left to Pay
                                                 </button>
                                             </div>
@@ -784,8 +784,8 @@ const PoS = () => {
                                             </div>
                                         </div>
                                         <div className="modal-footer flex">
-                                            <button type="button" className="btn" data-toggle="checkout-modal" onClick={(e) => toggleModal(e)}>Close</button>
-                                            <button type="button" className="btn" data-toggle="checkout-modal" data-action="close_transaction" onClick={(e) => toggleModal(e)}>Confirm Transaction</button>
+                                            <button type="button" className="btn btn-outline-danger" data-toggle="checkout-modal" onClick={(e) => toggleModal(e)}>Close</button>
+                                            <button type="button" className="btn btn-outline-success" data-toggle="checkout-modal" data-action="close_transaction" onClick={(e) => toggleModal(e)}>Confirm Transaction</button>
                                         </div>
                                     </div>
                                 </div>
