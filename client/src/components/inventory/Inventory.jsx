@@ -109,6 +109,14 @@ const Inventory = () => {
         }
     }
 
+    const reset = () => {
+        // document.getElementById('inventory-input').value = '';
+        setBarcode('');
+        setProduct();
+        // focus on barcode input
+        document.getElementById('barcode-input').focus();
+    }
+
     useEffect(() => {
         setProduct();
         setNewProduct(false);
@@ -122,7 +130,11 @@ const Inventory = () => {
                 <button className="btn btn-outline-neutral" onClick={changeMode}>{mode.charAt(0).toUpperCase() + mode.slice(1)}</button>
             </div>
             <div className="inventory-container">
-                <input id="inventory-input" className="form-control" placeholder="Scan Barcode" value={barcode} onChange={e => setBarcode((e.target.value))} aria-label="Search Barcode" id="barcode-input" autoFocus />
+                <div className="flex">
+                    <input id="barcode-input" className="form-control" placeholder="Scan Barcode" value={barcode} onChange={e => setBarcode((e.target.value))} aria-label="Search Barcode" id="barcode-input" autoFocus />
+                    <button className="btn btn-outline-neutral" onClick={() => reset()}>Reset</button>
+                </div>
+
                 {product ? <DisplayProductComponent product={product} editProduct={editProduct}/> : null}
                 {newProduct ? <CreateProduct addProduct={addProduct}/> : null}
             </div>
