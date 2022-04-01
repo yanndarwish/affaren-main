@@ -81,6 +81,7 @@ const PoS = () => {
                 setQtyUpdated(true);
             }
             catch (err) {
+                alert('Product not found');
                 console.log('Product not found');
             }
         }
@@ -102,10 +103,7 @@ const PoS = () => {
                 product_taxe: parseInt(noBarcodeTaxe)
             }
             setProducts([...products, newProduct]);
-            console.log(noBarcodeName)
             noBarcodeName = '';
-            console.log(noBarcodeName)
-
             noBarcodePrice = '';
             noBarcodeQuantity = '';
             noBarcodeTaxe = '';
@@ -120,15 +118,12 @@ const PoS = () => {
         const productExist = products.find(product => product.product_id === parseInt(e.target.parentNode.dataset.id));
         if (productExist) {
             products.map(product => {
-                console.log("adding qty")
                 if (product.product_id === parseInt(e.target.parentNode.dataset.id)) {
-                    console.log('found match')
                     product.product_quantity += 1;
                 }
             });
         }
         else if (!productExist) {
-            console.log('not found match')
             const newProduct = {
                 product_id: parseInt(e.target.parentNode.dataset.id),
                 product_name: e.target.parentNode.dataset.name,
@@ -137,7 +132,6 @@ const PoS = () => {
                 product_barcode: '',
                 product_taxe: parseInt(e.target.parentNode.dataset.taxe_id)
             }
-            console.log(newProduct);
             setProducts([...products, newProduct]);
         }
         setQtyUpdated(true);
@@ -173,6 +167,13 @@ const PoS = () => {
             }
         }
         setQtyUpdated(true);
+    }
+
+    const reset = () => {
+        // document.getElementById('inventory-input').value = '';
+        setBarcode('');
+        // focus on barcode input
+        document.getElementById('barcode-input').focus();
     }
 
     // get total of actual transaction
@@ -374,7 +375,6 @@ const PoS = () => {
                     alert('Change : ' + Math.abs(leftToPay) + ' €')
                 }
                 try {
-                    console.log('close transaction');
                     setAccounting()
                     addProductsInTransaction()
                     updateStock();
@@ -438,7 +438,6 @@ const PoS = () => {
             }
         }
     }
-    console.log(time.day)
     // Set all the accounting info in the database
     const setAccounting = async () => {
         try {
@@ -501,7 +500,6 @@ const PoS = () => {
     }
 
     const toggleModal = (e) => {
-        console.log(e.target.dataset.toggle)
         const modal = document.querySelector(`.${e.target.dataset.toggle}`)
         const modalToggle = document.querySelector(`.${e.target.dataset.toggle}-toggle`)
         const modalDialog = document.querySelector(`.${e.target.dataset.toggle}-dialog`)
@@ -546,7 +544,6 @@ const PoS = () => {
         checkboxes.forEach(checkbox => {
             if (checkbox.checked) {
                 const index = checkbox.dataset.index
-                console.log(index)
                 const product = products[index]
                 const newProduct = {
                     ...product,
@@ -580,6 +577,7 @@ const PoS = () => {
                         <div className="flex barcode-section">
                             <input className="form-control" value={barcode} onChange={e => setBarcode((e.target.value))} placeholder='Enter barcode' autoFocus id='barcode-input'/>
                             {/* no barcode product */}
+                                <button className="btn btn-outline-neutral" onClick={() => reset()}>Reset</button>
                             <button type="button" className="btn btn-outline-neutral no-barcode-modal-toggle" data-toggle="no-barcode-modal" aria-expanded="false" onClick={(e) => toggleModal(e)}>
                                 No barcode
                             </button>
@@ -599,7 +597,16 @@ const PoS = () => {
                                             <div>
                                                 <span>Name</span>
                                             </div>
-                                            <input type="text" aria-describedby="no-barcode-name" id="no-barcode-name"/>
+                                            <select name="categories" aria-describedby="no-barcode-name" id="no-barcode-name">
+                                                <option value="Magazine">Magazine</option>
+                                                <option value="Confiserie">Confiserie</option>
+                                                <option value="Bonbon au Poids">Bonbon au Poids</option>
+                                                <option value="Produit d'épicerie">Produit d'épicerie</option>
+                                                <option value="Décoration">Décoration</option>
+                                                <option value="Pain">Pain</option>
+                                                <option value="Pâtisserie">Pâtisserie</option>
+                                            </select>
+                                            {/* <input type="text" /> */}
                                             <div>
                                                 <span>Price</span>
                                             </div>
@@ -643,6 +650,11 @@ const PoS = () => {
                             <img className="card-img-top" src="..." alt="formule sandwich" />
                             <p className="card-text">Formule Sandwich</p>
                         </div>
+                        <div className="card" style={{"zIndex":"1"}} data-id="1150" data-name="Café/Thé" data-price="2" data-taxe_id="1" onClick={(e) => addProductFromCard(e)}>
+                            <img className="card-img-top" src="..." alt="café" />
+                            <p className="card-text">Café/Thé</p>
+                        </div>
+                        {/* ADD PASTRIES MODAL HERE */}
                     </div>
                 </div>
                 <div className='grid-container cart-container'>
