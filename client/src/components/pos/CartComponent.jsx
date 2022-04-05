@@ -65,7 +65,7 @@ const CartComponent = ({products, setProducts, setQtyUpdated}) => {
                 </div>
                 <div className='item-qty-container flex'>
                     <i className="fas fa-minus" data-id={product.product_id} onClick={e => substractOne(e)}></i>
-                    <input type="number" className='item-qty' data-id={product.product_id} value={product.product_quantity} onChange={e => setQuantity(e)}/>
+                    <input id="cart-qty-input" type="number" className='item-qty' data-id={product.product_id} value={product.product_quantity} onChange={e => setQuantity(e)}/>
                     <i className="fas fa-plus" data-id={product.product_id} onClick={e => addOne(e)}></i>
                 </div>
             </div>

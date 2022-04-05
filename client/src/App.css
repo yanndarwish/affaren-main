@@ -727,6 +727,10 @@ tr:nth-child(even) {
   white-space:nowrap;
 }
 
+#cart-qty-input {
+  padding:0;
+}
+
 @media (min-width:75em) {
   .cart-item-name {
     width:15ch;
