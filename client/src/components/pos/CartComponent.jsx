@@ -51,8 +51,8 @@ const CartComponent = ({products, setProducts, setQtyUpdated}) => {
     }
 
     return (
-        products.map(product => (
-            <div className='cart-item flex' key={product.product_name}>
+        products.map((product, i) => (
+            <div className='cart-item flex' key={product.product_name + i}>
                 <div className="col-1 align-items-center">
                         <i className="far fa-trash-alt" data-id={product.product_id} onClick={e => removeProduct(e)}></i>
                 </div>
