@@ -317,11 +317,11 @@ const PoS = () => {
                     taxes.total_3 += Math.round(products[i].product_price * products[i].product_quantity * 100) / 100;
                 }
             }
-            taxes.ht_1 += Math.round((taxes.total_1/(1 + taxRate /100)) * 100) / 100;
+            taxes.ht_1 += Math.round((taxes.total_1/(1 + 5.5 /100)) * 100) / 100;
             taxes.tva_1 += Math.round((taxes.total_1 - taxes.ht_1) * 100) / 100;
-            taxes.ht_2 += Math.round(taxes.total_2/(1 + taxRate /100) * 100) / 100;
+            taxes.ht_2 += Math.round(taxes.total_2/(1 + 2.1 /100) * 100) / 100;
             taxes.tva_2 += Math.round((taxes.total_2 - taxes.ht_2) * 100) / 100;
-            taxes.ht_3 += Math.round(taxes.total_3/(1 + taxRate /100) * 100) / 100;
+            taxes.ht_3 += Math.round(taxes.total_3/(1 + 20 /100) * 100) / 100;
             taxes.tva_3 += Math.round((taxes.total_3 - taxes.ht_3) * 100) / 100;
             taxes.total_tva = taxes.tva_1 + taxes.tva_2 + taxes.tva_3;
             setTaxes(taxes);
