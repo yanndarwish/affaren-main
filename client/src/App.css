@@ -577,7 +577,7 @@ tr:nth-child(even) {
 .checkout-modal[data-visible="true"],
 .month-detail-modal[data-visible="true"],
 .discount-modal[data-visible="true"] {
-  z-index:100;
+  z-index:50;
   display:flex;
 }
 
@@ -598,6 +598,7 @@ tr:nth-child(even) {
   -moz-border-radius: 1rem;
   -ms-border-radius: 1rem;
   -o-border-radius: 1rem;
+  z-index:100;
 }
 
 @supports (backdrop-filter: blur(1.5rem)) {
@@ -782,6 +783,24 @@ tr:nth-child(even) {
   -o-border-radius:1rem;
 }
 
-.product-discount-checkbox {
+.product-discount-container {
+  gap:2rem;
+}
+
+.btn-discount-container input,
+.product-discount-checkbox input{
+  transform:scale(1.5);
+}
+
+.discount-label {
   justify-content: space-between;
+  width:100%;
+}
+
+.numpad {
+  display:none;
+}
+
+.visible {
+  display:block;
 }

@@ -108,7 +108,19 @@ const PoS = () => {
             noBarcodeQuantity = '';
             noBarcodeTaxe = '';
             setQtyUpdated(true);
+        }
+    }
 
+    const autoCompleteNoBarcode = () => {
+        let noBarcodeName = document.getElementById('no-barcode-name').value;
+        let noBarcodeTaxe = document.getElementById('no-barcode-taxe').value;
+        console.log(noBarcodeName);
+        if (noBarcodeName === 'Magazine') {
+            document.getElementById('no-barcode-taxe').value = 2;
+        } else if (noBarcodeName === 'Décoration' || noBarcodeName === 'Alcool') {
+            document.getElementById('no-barcode-taxe').value = 3;
+        } else {
+            document.getElementById('no-barcode-taxe').value = 1;
         }
     }
 
@@ -442,15 +454,15 @@ const PoS = () => {
     const setAccounting = async () => {
         try {
             const body = {
-                hors_taxe_1: taxes[`ht_1`],
-                hors_taxe_2: taxes[`ht_2`],
-                hors_taxe_3: taxes[`ht_3`],
-                tva_1: taxes[`tva_1`],
-                tva_2: taxes[`tva_2`],
-                tva_3: taxes[`tva_3`],
-                total_1: taxes[`total_1`],
-                total_2: taxes[`total_2`],
-                total_3: taxes[`total_3`],
+                hors_taxe_1: Math.round(taxes[`ht_1`] * 100) / 100,
+                hors_taxe_2: Math.round(taxes[`ht_2`] * 100) / 100,
+                hors_taxe_3: Math.round(taxes[`ht_3`] * 100) / 100,
+                tva_1: Math.round(taxes[`tva_1`] * 100) / 100,
+                tva_2: Math.round(taxes[`tva_2`] * 100) / 100,
+                tva_3: Math.round(taxes[`tva_3`] * 100) / 100,
+                total_1: Math.round(taxes[`total_1`] * 100) / 100,
+                total_2: Math.round(taxes[`total_2`] * 100) / 100,
+                total_3: Math.round(taxes[`total_3`] * 100) / 100,
                 sale_total: Math.round(total * 100) / 100,
                 taxe_amount: Math.round(taxes[`total_tva`] * 100) / 100,
                 sale_year: time[`year`],
@@ -499,30 +511,52 @@ const PoS = () => {
         }
     }
 
-    const toggleModal = (e) => {
+    const openModal = (e) => {
         const modal = document.querySelector(`.${e.target.dataset.toggle}`)
         const modalToggle = document.querySelector(`.${e.target.dataset.toggle}-toggle`)
         const modalDialog = document.querySelector(`.${e.target.dataset.toggle}-dialog`)
-
         if(e.target.dataset.action === "payment") {
             payment()
-        } else if (e.target.dataset.action === "close_transaction") {
-            closeTransaction()
-        } else if (e.target.dataset.action === "clear_cart") {
-            clearTransaction()
-        } else if (e.target.dataset.action === "add_no_barcode_product") {
-            addNoBarcodeProduct()
-        } else if(e.target.dataset.action === "add-discount") {
-            discount()
         }
+        modal.setAttribute("data-visible", true)
+        modal.setAttribute("aria-hidden", false)
+        modalToggle.setAttribute("aria-expanded", true)
+        modalDialog.setAttribute("data-visible", true)
+    }
+    
+    const closeModal = (e) => {
+        if(e.target.hasAttribute("data-toggle")){
+            console.log('clicked')
+            const modal = document.querySelector(`.${e.target.dataset.toggle}`)
+            const modalToggle = document.querySelector(`.${e.target.dataset.toggle}-toggle`)
+            const modalDialog = document.querySelector(`.${e.target.dataset.toggle}-dialog`)
 
-        const visibility = modal.getAttribute("data-visible")
-        if (visibility === "false") {
-            modal.setAttribute("data-visible", true)
-            modal.setAttribute("aria-hidden", false)
-            modalToggle.setAttribute("aria-expanded", true)
-            modalDialog.setAttribute("data-visible", true)
-        } else {
+            modal.setAttribute("data-visible", false)
+            modal.setAttribute("aria-hidden", true)
+            modalToggle.setAttribute("aria-expanded", false)
+            modalDialog.setAttribute("data-visible", false)
+        }
+    }
+
+    const actionModal = (e) => {
+        if(e.target.hasAttribute("data-target")){
+            console.log('target')
+            const modal = document.querySelector(`.${e.target.dataset.target}`)
+            const modalToggle = document.querySelector(`.${e.target.dataset.target}-toggle`)
+            const modalDialog = document.querySelector(`.${e.target.dataset.target}-dialog`)
+    
+            if(e.target.dataset.action === "payment") {
+                payment()
+            } else if (e.target.dataset.action === "close_transaction") {
+                closeTransaction()
+            } else if (e.target.dataset.action === "clear_cart") {
+                clearTransaction()
+            } else if (e.target.dataset.action === "add_no_barcode_product") {
+                addNoBarcodeProduct()
+            } else if(e.target.dataset.action === "add-discount") {
+                discount()
+            }
+
             modal.setAttribute("data-visible", false)
             modal.setAttribute("aria-hidden", true)
             modalToggle.setAttribute("aria-expanded", false)
@@ -560,6 +594,40 @@ const PoS = () => {
         printer(products, taxes, total, time)
     }
 
+    // select all input type number
+    const numPad = (e) => {
+    console.log(document.activeElement.type)
+
+        const numPad = document.getElementById('numPad')
+        numPad.classList.add('visible')
+        // console.log(numPad)
+        // console.log(e.target)
+        e.target.value = 3
+    }
+
+    // console.log(document.activeElement)
+
+
+    // const NumPadComponent = () => {
+    //     return (
+    //         <div id="numPad" className="numpad grid">
+    //             <div>7</div>
+    //             <div>8</div>
+    //             <div>9</div>
+    //             <div>CLEAR</div>
+    //             <div>4</div>
+    //             <div>5</div>
+    //             <div>6</div>
+    //             <div>&lsaquo;-</div>
+    //             <div>1</div>
+    //             <div>2</div>
+    //             <div>3</div>
+    //             <div>0</div>
+    //             <div>.</div>
+
+    //         </div>
+    //     )
+    // }
 
 
     return (
@@ -569,26 +637,27 @@ const PoS = () => {
                     <div className="heading-section flex">
                         <h1 className="fs-700 ff-source">Sale n° {saleId}</h1>
                         <div className="flex">
-                            <input type="number" placeholder="ID" aria-label="Sale ID to edit" id="edit-sale-id" onChange={editOnChange}/>
+                            <input type="number" placeholder="ID" aria-label="Sale ID to edit" id="edit-sale-id" onChange={editOnChange} onFocus={(e) => numPad(e)}/>
                             <button id="edit-btn" className="btn btn-outline-neutral" type="button" onClick={editTransaction}>Edit Sale</button>
                         </div>
                     </div>
                     <div className="container">
+                        {/* {<NumPadComponent />} */}
                         <div className="flex barcode-section">
                             <input className="form-control" value={barcode} onChange={e => setBarcode((e.target.value))} placeholder='Enter barcode' autoFocus id='barcode-input'/>
                             {/* no barcode product */}
                                 <button className="btn btn-outline-neutral" onClick={() => reset()}>Reset</button>
-                            <button type="button" className="btn btn-outline-neutral no-barcode-modal-toggle" data-toggle="no-barcode-modal" aria-expanded="false" onClick={(e) => toggleModal(e)}>
+                            <button type="button" className="btn btn-outline-neutral no-barcode-modal-toggle" data-toggle="no-barcode-modal" aria-expanded="false" onClick={(e) => openModal(e)}>
                                 No barcode
                             </button>
                         </div>
                     {/* no barcode product modal */}
-                        <div className="modal no-barcode-modal" role="dialog" data-visible="false" aria-hidden="true">
+                        <div className="modal no-barcode-modal" role="dialog" data-visible="false" aria-hidden="true" data-toggle="no-barcode-modal" onClick={(e) => closeModal(e)}>
                             <div className="no-barcode-modal-dialog modal-dialog" role="document" data-visible="false">
                                 <div>
                                     <div className="modal-header">
                                         <h5 className="fs-500">No Barcode Product</h5>
-                                        <button type="button" className="close-btn" data-toggle="no-barcode-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
+                                        <button type="button" className="close-btn" data-toggle="no-barcode-modal" onClick={(e) => closeModal(e)} aria-label="Close">
                                             <span aria-hidden="true" data-toggle="no-barcode-modal">&times;</span>
                                         </button>
                                     </div>
@@ -597,24 +666,25 @@ const PoS = () => {
                                             <div>
                                                 <span>Name</span>
                                             </div>
-                                            <select name="categories" aria-describedby="no-barcode-name" id="no-barcode-name">
-                                                <option value="Magazine">Magazine</option>
-                                                <option value="Confiserie">Confiserie</option>
-                                                <option value="Bonbon au Poids">Bonbon au Poids</option>
+                                            <select name="categories" aria-describedby="no-barcode-name" id="no-barcode-name" onChange={() => autoCompleteNoBarcode()}>
                                                 <option value="Produit d'épicerie">Produit d'épicerie</option>
+                                                <option value="Confiserie">Confiserie</option>
+                                                <option value="Magazine">Magazine</option>
+                                                <option value="Bonbon au Poids">Bonbon au Poids</option>
                                                 <option value="Décoration">Décoration</option>
                                                 <option value="Pain">Pain</option>
                                                 <option value="Pâtisserie">Pâtisserie</option>
+                                                <option value="Alcool">Alcool</option>
                                             </select>
                                             {/* <input type="text" /> */}
                                             <div>
                                                 <span>Price</span>
                                             </div>
-                                            <input type="number" step="0.05" aria-describedby="no-barcode-price" id="no-barcode-price"/>
+                                            <input type="number" step="0.05" aria-describedby="no-barcode-price" id="no-barcode-price" onFocus={(e) => numPad(e)}/>
                                             <div>
                                                 <span>Quantity</span>
                                             </div>
-                                            <input type="number" aria-describedby="no-barcode-quantity" id="no-barcode-quantity"/>
+                                            <input type="number" aria-describedby="no-barcode-quantity" id="no-barcode-quantity" defaultValue="1" onFocus={(e) => numPad(e)}/>
                                             <div>
                                                 <span>Taxe</span>
                                             </div>
@@ -626,8 +696,8 @@ const PoS = () => {
                                         </div>
                                     </div>
                                     <div className="modal-footer flex">
-                                        <button type="button" className="btn btn-outline-danger" data-toggle="no-barcode-modal" onClick={(e) => toggleModal(e)}>Close</button>
-                                        <button type="button" className="btn btn-outline-success" data-toggle="no-barcode-modal" data-action="add_no_barcode_product" onClick={(e) => toggleModal(e)}>Add Product</button>
+                                        <button type="button" className="btn btn-outline-danger" data-toggle="no-barcode-modal" onClick={(e) => closeModal(e)}>Close</button>
+                                        <button type="button" className="btn btn-outline-success" data-target="no-barcode-modal" data-action="add_no_barcode_product" onClick={(e) => actionModal(e)}>Add Product</button>
                                     </div>
                                 </div>
                             </div>
@@ -661,17 +731,17 @@ const PoS = () => {
                     <div className='cart-header flex'>
                         <h3 className="fs-600 ff-source">Cart</h3>
                         {/* Clear the cart */}
-                        <button type="button" className="btn clear-cart-modal-toggle close-btn" data-toggle="clear-cart-modal" aria-expanded="false" onClick={(e) => toggleModal(e)}>
+                        <button type="button" className="btn clear-cart-modal-toggle close-btn" data-toggle="clear-cart-modal" aria-expanded="false" onClick={(e) => openModal(e)}>
                             <i className="fas fa-times close-icon clear-cart-modal-toggle" data-toggle="clear-cart-modal"></i>
                         </button>
 
                         {/* Clear the cart Modal */}
-                        <div className="modal clear-cart-modal" id="clearCart" role="dialog" data-visible="false" aria-hidden="true">
+                        <div className="modal clear-cart-modal" id="clearCart" role="dialog" data-visible="false" aria-hidden="true" data-toggle="clear-cart-modal" onClick={(e) => closeModal(e)}>
                             <div className="modal-dialog clear-cart-modal-dialog" role="document" data-visible="false">
                                 <div>
                                     <div className="modal-header">
                                         <h5 className="fs-500">Clear Cart</h5>
-                                        <button type="button" className="close-btn" data-toggle="clear-cart-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
+                                        <button type="button" className="close-btn" data-toggle="clear-cart-modal" onClick={(e) => closeModal(e)} aria-label="Close">
                                             <span aria-hidden="true" data-toggle="clear-cart-modal">&times;</span>
                                         </button>
                                     </div>
@@ -679,8 +749,8 @@ const PoS = () => {
                                         Are you sure you want to clear the cart ?
                                     </div>
                                     <div className="modal-footer flex">
-                                        <button type="button" className="btn btn-outline-danger" data-toggle="clear-cart-modal" onClick={(e) => toggleModal(e)}>Close</button>
-                                        <button type="button" className="btn btn-outline-success" data-toggle="clear-cart-modal" data-action="clear_cart" onClick={(e) => toggleModal(e)}>Clear Cart</button>
+                                        <button type="button" className="btn btn-outline-danger" data-toggle="clear-cart-modal" onClick={(e) => closeModal(e)}>Close</button>
+                                        <button type="button" className="btn btn-outline-success" data-target="clear-cart-modal" data-action="clear_cart" onClick={(e) => actionModal(e)}>Clear Cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -704,22 +774,22 @@ const PoS = () => {
                                 <button type="button" className="btn btn-outline-neutral receipt" onClick={() => receipt()}>
                                     Receipt
                                 </button>
-                                <button type="button" className="btn btn-outline-neutral discount-modal-toggle" data-toggle="discount-modal" onClick={(e) => toggleModal(e)} aria-expanded="false">
+                                <button type="button" className="btn btn-outline-neutral discount-modal-toggle" data-toggle="discount-modal" onClick={(e) => openModal(e)} aria-expanded="false">
                                     Discount
                                 </button>
-                                <div className="modal discount-modal" role="dialog"  data-visible="false" aria-hidden="true">
+                                <div className="modal discount-modal" role="dialog"  data-visible="false" aria-hidden="true" data-toggle="discount-modal" onClick={(e) => closeModal(e)}>
                                 <div className="modal-dialog discount-modal-dialog" role="document" data-visible="false">
                                     <div>
                                         <div className="modal-header">
                                             <h2 className="fs-500">Add Discount</h2>
-                                            <button type="button" className="close-btn" data-toggle="discount-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
+                                            <button type="button" className="close-btn" data-toggle="discount-modal" onClick={(e) => closeModal(e)} aria-label="Close">
                                                 <span aria-hidden="true" data-toggle="discount-modal">&times;</span>
                                             </button>
                                         </div>
                                         <div className="modal-body">
                                             
                                             <div className="flex">
-                                                <input type="number" aria-describedby="discount amount" id="discount-amount" placeholder="Discount percentage"/>
+                                                <input type="number" aria-describedby="discount amount" id="discount-amount" placeholder="Discount percentage" onFocus={(e) => numPad(e)}/>
                                             </div>
                                             <div className="btn btn-discount-container btn-outline-neutral flex">
                                                 <input type="checkbox" id="discount-all" onClick={(e) => toggleAllCheckboxes(e)} />
@@ -730,18 +800,22 @@ const PoS = () => {
                                                 {products.map((product, index) => {
                                                     return (
                                                         <div className="product-discount-checkbox flex fs-400" key={index}>
-                                                            <input type="checkbox" id={product.product_id} name={product.product_name} data-index={index} value={product.product_name}/> 
-                                                            <p>{product.product_name}</p>
-                                                            <p>{product.product_quantity}</p>
-                                                            <p>{product.product_price}</p>
+                                                            <input type="checkbox" id={product.product_name + index} name={product.product_name} data-index={index} value={product.product_name}/> 
+                                                            <label htmlFor={product.product_name + index} className="fs-400 flex discount-label">
+                                                                <p>{product.product_name}</p>
+                                                                <div className="flex">
+                                                                <p>{product.product_quantity}</p>
+                                                                <p>{product.product_price}</p>
+                                                                </div>
+                                                            </label>
                                                         </div>
                                                     )
                                                 })}
                                             </div>
                                         </div>
                                         <div className="modal-footer flex">
-                                            <button type="button" className="btn btn-outline-danger" data-toggle="discount-modal" onClick={(e) => toggleModal(e)}>Close</button>
-                                            <button type="button" className="btn btn-outline-success" data-toggle="discount-modal" data-action="add-discount" onClick={(e) => toggleModal(e)}>Apply Discount</button>
+                                            <button type="button" className="btn btn-outline-danger" data-toggle="discount-modal" onClick={(e) => closeModal(e)}>Close</button>
+                                            <button type="button" className="btn btn-outline-success" data-target="discount-modal" data-action="add-discount" onClick={(e) => actionModal(e)}>Apply Discount</button>
                                         </div>
                                     </div>
                                 </div>
@@ -749,16 +823,16 @@ const PoS = () => {
                             </div>
                         
                         {/* Pay */}
-                            <button type="button" className="btn btn-outline-success checkout-modal-toggle" data-toggle="checkout-modal" data-action="payment" onClick={(e) => toggleModal(e)} aria-expanded="false">
+                            <button type="button" className="btn btn-outline-success checkout-modal-toggle" data-toggle="checkout-modal" data-action="payment" onClick={(e) => openModal(e)} aria-expanded="false">
                                 Check Out
                             </button>
                         {/* Pay Modal */}
-                            <div className="modal checkout-modal" role="dialog"  data-visible="false" aria-hidden="true">
+                            <div className="modal checkout-modal" role="dialog"  data-visible="false" aria-hidden="true" data-toggle="checkout-modal" onClick={(e) => closeModal(e)}>
                                 <div className="modal-dialog checkout-modal-dialog" role="document" data-visible="false">
                                     <div>
                                         <div className="modal-header">
                                             <h2 className="fs-600">Confirm Payment</h2>
-                                            <button type="button" className="close-btn" data-toggle="checkout-modal" onClick={(e) => toggleModal(e)} aria-label="Close">
+                                            <button type="button" className="close-btn" data-toggle="checkout-modal" onClick={(e) => closeModal(e)} aria-label="Close">
                                                 <span aria-hidden="true" data-toggle="checkout-modal">&times;</span>
                                             </button>
                                         </div>
@@ -767,7 +841,7 @@ const PoS = () => {
                                                 {loaded ? <TaxeComponent taxesId={taxesId} taxes={taxes}/> : <div>Loading...</div>}
                                             </div>
                                             <div className="flex">
-                                                <input type="number" step="0.01" aria-describedby="left-to-pay" id="left-to-pay" placeholder="Enter amount if split payment, or click total" defaultValue={leftToPay}/>
+                                                <input type="number" step="0.01" aria-describedby="left-to-pay" id="left-to-pay" placeholder="Enter amount if split payment, or click total" defaultValue={leftToPay} onFocus={(e) => numPad(e)}/>
                                                 <button type="button" className="btn btn-outline-neutral" onClick={remaining}>
                                                     Left to Pay
                                                 </button>
@@ -796,8 +870,8 @@ const PoS = () => {
                                             </div>
                                         </div>
                                         <div className="modal-footer flex">
-                                            <button type="button" className="btn btn-outline-danger" data-toggle="checkout-modal" onClick={(e) => toggleModal(e)}>Close</button>
-                                            <button type="button" className="btn btn-outline-success" data-toggle="checkout-modal" data-action="close_transaction" onClick={(e) => toggleModal(e)}>Confirm Transaction</button>
+                                            <button type="button" className="btn btn-outline-danger" data-toggle="checkout-modal" onClick={(e) => closeModal(e)}>Close</button>
+                                            <button type="button" className="btn btn-outline-success" data-target="checkout-modal" data-action="close_transaction" onClick={(e) => actionModal(e)}>Confirm Transaction</button>
                                         </div>
                                     </div>
                                 </div>
