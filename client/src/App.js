@@ -142,32 +142,32 @@ function App() {
               <ul data-visible="false" data-nav="true" className="primary-navigation underline-indicators grid">
               <div className="logo" alt="logo" data-nav="true"></div>
                 <li className="nav-item" data-nav="true">
-                  <a className="uppercase ff-source text-dark letter-spacing-2 active" href="#" data-nav="true" onClick={togglePosMode}>
-                  <i className="fas fa-cash-register" data-nav="true"></i>
+                  <a className="uppercase ff-source text-dark letter-spacing-2 active" href="#"  onClick={togglePosMode}>
+                  <i className="fas fa-cash-register" ></i>
                   Point Of Sale<span className="sr-only">(current)</span>
                   </a>
                 </li>
                 <li className="nav-item" data-nav="true">
-                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" data-nav="true"onClick={toggleAdminMode}>
-                  <i className="fas fa-chart-line" data-nav="true"></i>
+                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" onClick={toggleAdminMode}>
+                  <i className="fas fa-chart-line"></i>
                     Admin
                   </a>
                 </li>
                 <li className="nav-item" data-nav="true">
-                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" data-nav="true" onClick={toggleInventoryMode}>
-                  <i className="fas fa-boxes" data-nav="true"></i>
+                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" onClick={toggleInventoryMode}>
+                  <i className="fas fa-boxes"></i>
                     Inventory
                   </a>
                 </li>
                 <li className="nav-item" data-nav="true">
-                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" data-nav="true" onClick={toggleLowStockMode}>
-                  <i className="fas fa-truck-loading" data-nav="true"></i>
+                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" onClick={toggleLowStockMode}>
+                  <i className="fas fa-truck-loading"></i>
                     Low Stock
                   </a>
                 </li>
                 <li className="nav-item" data-nav="true">
-                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" data-nav="true" onClick={toggleBestSellerMode}>
-                  <i className="fas fa-award" data-nav="true"></i>
+                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" onClick={toggleBestSellerMode}>
+                  <i className="fas fa-award"></i>
                   Best Sellers
                   </a>
                 </li>
