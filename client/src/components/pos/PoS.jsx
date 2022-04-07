@@ -33,7 +33,7 @@ const PoS = () => {
     const [taxesId, setTaxesId] = useState([]);
     const [taxes, setTaxes] = useState([]);
     const [loaded, setLoaded] = useState(false);
-    const [discountPercentage, setDiscountPercentage] = useState(1);
+    // const [discountPercentage, setDiscountPercentage] = useState(1);
     let [leftToPay, setLeftToPay] = useState(0);
     let [paid, setPaid] = useState(0);
 
@@ -510,6 +510,7 @@ const PoS = () => {
     }
 
     const openModal = (e) => {
+        console.log(e.target.dataset.toggle)
         const modal = document.querySelector(`.${e.target.dataset.toggle}`)
         const modalToggle = document.querySelector(`.${e.target.dataset.toggle}-toggle`)
         const modalDialog = document.querySelector(`.${e.target.dataset.toggle}-dialog`)
@@ -569,7 +570,8 @@ const PoS = () => {
 
     const discount = () => {
         const discountAmount = document.getElementById('discount-amount').value
-        let discountOperator = discountPercentage - (discountAmount / 100)
+        let discountOperator = 1 - (discountAmount / 100)
+        console.log(discountOperator)
         const checkboxes = document.querySelector('.product-discount-container').querySelectorAll('input[type="checkbox"]')
         checkboxes.forEach(checkbox => {
             if (checkbox.checked) {
@@ -577,7 +579,7 @@ const PoS = () => {
                 const product = products[index]
                 const newProduct = {
                     ...product,
-                    product_price: Math.round((product.product_price * discountOperator)* 100) / 100
+                    product_price: Math.round((product.product_price * discountOperator) * 1000) / 1000
                 }
                 products[index] = newProduct
             }
@@ -592,38 +594,56 @@ const PoS = () => {
 
     // select all input type number
     const numPad = (e) => {
-    console.log(document.activeElement.type)
-
         const numPad = document.getElementById('numPad')
         numPad.classList.add('visible')
-        // console.log(numPad)
-        // console.log(e.target)
-        e.target.value = 3
+        console.log(e.target.id)
+        numPad.setAttribute('data-active', e.target.id)
     }
 
-    // console.log(document.activeElement)
+    document.addEventListener('click', (e) => {
+        if (!e.target.hasAttribute('data-numpad')) {
+            const numPad = document.getElementById('numPad')
+            numPad.classList.remove('visible')
+        }
+    })
 
+    const numpadAction = (e) => {
+        console.log(e.target.dataset.value)
+        const numPad = document.getElementById('numPad')
+        console.log(numPad.dataset.active)
+        const activeInput = document.getElementById(numPad.dataset.active)
+        if (e.target.dataset.value === 'return') {
+            activeInput.value = activeInput.value.slice(0, -1)
+        } else if (e.target.dataset.value === 'clear') {
+            activeInput.value = ''
+        } else if (e.target.dataset.value === '.') {
+            activeInput.value += '.'
+        } else  {
+            activeInput.value += e.target.dataset.value
+        }
+    }
 
-    // const NumPadComponent = () => {
-    //     return (
-    //         <div id="numPad" className="numpad grid">
-    //             <div>7</div>
-    //             <div>8</div>
-    //             <div>9</div>
-    //             <div>CLEAR</div>
-    //             <div>4</div>
-    //             <div>5</div>
-    //             <div>6</div>
-    //             <div>&lsaquo;-</div>
-    //             <div>1</div>
-    //             <div>2</div>
-    //             <div>3</div>
-    //             <div>0</div>
-    //             <div>.</div>
-
-    //         </div>
-    //     )
-    // }
+    const NumPadComponent = () => {
+        return (
+            <div id="numPad" className="numpad" data-numpad="true">
+                <div className="numpad-content grid" data-numpad="true">
+                    <div className="numpad-btn" data-numpad="true" data-value="0" onClick={(e) => numpadAction(e)}>0</div>
+                    <div className="numpad-btn" data-numpad="true" data-value="1" onClick={(e) => numpadAction(e)}>1</div>
+                    <div className="numpad-btn" data-numpad="true" data-value="2" onClick={(e) => numpadAction(e)}>2</div>
+                    <div className="numpad-btn" data-numpad="true" data-value="3" onClick={(e) => numpadAction(e)}>3</div>
+                    <div className="numpad-btn" data-numpad="true" data-value="4" onClick={(e) => numpadAction(e)}>4</div>
+                    <div className="numpad-btn" data-numpad="true" data-value="5" onClick={(e) => numpadAction(e)}>5</div>
+                    <div className="numpad-btn" data-numpad="true" data-value="6" onClick={(e) => numpadAction(e)}>6</div>
+                    <div className="numpad-btn" data-numpad="true" data-value="7" onClick={(e) => numpadAction(e)}>7</div>
+                    <div className="numpad-btn" data-numpad="true" data-value="8" onClick={(e) => numpadAction(e)}>8</div>
+                    <div className="numpad-btn" data-numpad="true" data-value="9" onClick={(e) => numpadAction(e)}>9</div>
+                    <div className="numpad-btn" data-numpad="true" data-value="return" onClick={(e) => numpadAction(e)}>RETURN</div>
+                    <div className="numpad-btn" data-numpad="true" data-value="clear" onClick={(e) => numpadAction(e)}>CLEAR</div>
+                    <div className="numpad-btn" data-numpad="true" data-value="." onClick={(e) => numpadAction(e)}>.</div>
+                </div>
+            </div>
+        )
+    }
 
 
     return (
@@ -633,12 +653,12 @@ const PoS = () => {
                     <div className="heading-section flex">
                         <h1 className="fs-700 ff-source">Sale n° {saleId}</h1>
                         <div className="flex">
-                            <input type="number" placeholder="ID" aria-label="Sale ID to edit" id="edit-sale-id" onChange={editOnChange} onFocus={(e) => numPad(e)}/>
+                            <input type="number" placeholder="ID" aria-label="Sale ID to edit" id="edit-sale-id" onChange={editOnChange} data-numpad="true" onFocus={(e) => numPad(e)}/>
                             <button id="edit-btn" className="btn btn-outline-neutral" type="button" onClick={editTransaction}>Edit Sale</button>
                         </div>
                     </div>
                     <div className="container">
-                        {/* {<NumPadComponent />} */}
+                        {<NumPadComponent />}
                         <div className="flex barcode-section">
                             <input className="form-control" value={barcode} onChange={e => setBarcode((e.target.value))} placeholder='Enter barcode' autoFocus id='barcode-input'/>
                             {/* no barcode product */}
@@ -676,11 +696,11 @@ const PoS = () => {
                                             <div>
                                                 <span>Price</span>
                                             </div>
-                                            <input type="number" step="0.05" aria-describedby="no-barcode-price" id="no-barcode-price" onFocus={(e) => numPad(e)}/>
+                                            <input type="text" aria-describedby="no-barcode-price" id="no-barcode-price" data-numpad="true" onFocus={(e) => numPad(e)}/>
                                             <div>
                                                 <span>Quantity</span>
                                             </div>
-                                            <input type="number" aria-describedby="no-barcode-quantity" id="no-barcode-quantity" defaultValue="1" onFocus={(e) => numPad(e)}/>
+                                            <input type="number" aria-describedby="no-barcode-quantity" id="no-barcode-quantity" defaultValue="1" data-numpad="true" onFocus={(e) => numPad(e)}/>
                                             <div>
                                                 <span>Taxe</span>
                                             </div>
@@ -785,7 +805,7 @@ const PoS = () => {
                                         <div className="modal-body">
                                             
                                             <div className="flex">
-                                                <input type="number" aria-describedby="discount amount" id="discount-amount" placeholder="Discount percentage" onFocus={(e) => numPad(e)}/>
+                                                <input type="number" aria-describedby="discount amount" id="discount-amount" placeholder="Discount percentage" data-numpad="true" onFocus={(e) => numPad(e)}/>
                                             </div>
                                             <div className="btn btn-discount-container btn-outline-neutral flex">
                                                 <input type="checkbox" id="discount-all" onClick={(e) => toggleAllCheckboxes(e)} />
@@ -837,7 +857,7 @@ const PoS = () => {
                                                 {loaded ? <TaxeComponent taxesId={taxesId} taxes={taxes}/> : <div>Loading...</div>}
                                             </div>
                                             <div className="flex">
-                                                <input type="number" step="0.01" aria-describedby="left-to-pay" id="left-to-pay" placeholder="Enter amount if split payment, or click total" defaultValue={leftToPay} onFocus={(e) => numPad(e)}/>
+                                                <input type="number" step="0.01" aria-describedby="left-to-pay" id="left-to-pay" placeholder="Enter amount if split payment, or click total" defaultValue={leftToPay} data-numpad="true" onFocus={(e) => numPad(e)}/>
                                                 <button type="button" className="btn btn-outline-neutral" onClick={remaining}>
                                                     Left to Pay
                                                 </button>
