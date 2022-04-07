@@ -79,6 +79,44 @@ function App() {
     }
   }
 
+  const numpadAction = (e) => {
+    console.log(e.target.dataset.value)
+    const numPad = document.getElementById('numPad')
+    console.log(numPad.dataset.active)
+    const activeInput = document.getElementById(numPad.dataset.active)
+    if (e.target.dataset.value === 'return') {
+        activeInput.value = activeInput.value.slice(0, -1)
+    } else if (e.target.dataset.value === 'clear') {
+        activeInput.value = ''
+    } else if (e.target.dataset.value === '.') {
+        activeInput.value += '.'
+    } else  {
+        activeInput.value += e.target.dataset.value
+    }
+}
+
+  const NumPadComponent = () => {
+    return (
+        <div id="numPad" className="numpad" data-numpad="true">
+            <div className="numpad-content grid" data-numpad="true">
+                <div className="numpad-btn" data-numpad="true" data-value="0" onClick={(e) => numpadAction(e)}>0</div>
+                <div className="numpad-btn" data-numpad="true" data-value="1" onClick={(e) => numpadAction(e)}>1</div>
+                <div className="numpad-btn" data-numpad="true" data-value="2" onClick={(e) => numpadAction(e)}>2</div>
+                <div className="numpad-btn" data-numpad="true" data-value="3" onClick={(e) => numpadAction(e)}>3</div>
+                <div className="numpad-btn" data-numpad="true" data-value="4" onClick={(e) => numpadAction(e)}>4</div>
+                <div className="numpad-btn" data-numpad="true" data-value="5" onClick={(e) => numpadAction(e)}>5</div>
+                <div className="numpad-btn" data-numpad="true" data-value="6" onClick={(e) => numpadAction(e)}>6</div>
+                <div className="numpad-btn" data-numpad="true" data-value="7" onClick={(e) => numpadAction(e)}>7</div>
+                <div className="numpad-btn" data-numpad="true" data-value="8" onClick={(e) => numpadAction(e)}>8</div>
+                <div className="numpad-btn" data-numpad="true" data-value="9" onClick={(e) => numpadAction(e)}>9</div>
+                <div className="numpad-btn" data-numpad="true" data-value="return" onClick={(e) => numpadAction(e)}>RETURN</div>
+                <div className="numpad-btn" data-numpad="true" data-value="clear" onClick={(e) => numpadAction(e)}>CLEAR</div>
+                <div className="numpad-btn" data-numpad="true" data-value="." onClick={(e) => numpadAction(e)}>.</div>
+            </div>
+        </div>
+    )
+}
+
   document.addEventListener('click', (e) => {
     if (!e.target.hasAttribute('data-nav')) {
       const nav = document.querySelector('.primary-navigation')
@@ -88,6 +126,13 @@ function App() {
       navToggle.setAttribute("aria-expanded", false)
     }
   })
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.hasAttribute('data-numpad')) {
+        const numPad = document.getElementById('numPad')
+        numPad.classList.remove('visible')
+    }
+})
 
   return (
     <Fragment>
@@ -137,6 +182,7 @@ function App() {
             {inventoryMode ? <Suspense fallback={<div>Loadind...</div>}><Inventory /></Suspense> : null}
             {lowStockMode ? <Suspense fallback={<div>Loadind...</div>}><LowStock /></Suspense> : null}
             {bestSellerMode ? <Suspense fallback={<div>Loadind...</div>}><BestSellers /></Suspense> : null}
+            {<NumPadComponent />}
             
           </main>
     </div>
