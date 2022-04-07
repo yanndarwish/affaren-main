@@ -82,7 +82,6 @@ const PoS = () => {
             }
             catch (err) {
                 alert('Product not found');
-                console.log('Product not found');
             }
         }
     }
@@ -114,7 +113,6 @@ const PoS = () => {
     const autoCompleteNoBarcode = () => {
         let noBarcodeName = document.getElementById('no-barcode-name').value;
         let noBarcodeTaxe = document.getElementById('no-barcode-taxe').value;
-        console.log(noBarcodeName);
         if (noBarcodeName === 'Magazine') {
             document.getElementById('no-barcode-taxe').value = 2;
         } else if (noBarcodeName === 'Décoration' || noBarcodeName === 'Alcool') {
@@ -526,7 +524,6 @@ const PoS = () => {
     
     const closeModal = (e) => {
         if(e.target.hasAttribute("data-toggle")){
-            console.log('clicked')
             const modal = document.querySelector(`.${e.target.dataset.toggle}`)
             const modalToggle = document.querySelector(`.${e.target.dataset.toggle}-toggle`)
             const modalDialog = document.querySelector(`.${e.target.dataset.toggle}-dialog`)
@@ -540,7 +537,6 @@ const PoS = () => {
 
     const actionModal = (e) => {
         if(e.target.hasAttribute("data-target")){
-            console.log('target')
             const modal = document.querySelector(`.${e.target.dataset.target}`)
             const modalToggle = document.querySelector(`.${e.target.dataset.target}-toggle`)
             const modalDialog = document.querySelector(`.${e.target.dataset.target}-dialog`)

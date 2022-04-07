@@ -79,40 +79,50 @@ function App() {
     }
   }
 
+  document.addEventListener('click', (e) => {
+    if (!e.target.hasAttribute('data-nav')) {
+      const nav = document.querySelector('.primary-navigation')
+      const navToggle = document.querySelector('.mobile-nav-toggle')
+
+      nav.setAttribute("data-visible", false)
+      navToggle.setAttribute("aria-expanded", false)
+    }
+  })
+
   return (
     <Fragment>
       <div className="grid-container grid-container--home">
-          <nav>
+          <nav data-nav="true">
             
-              <ul data-visible="false" className="primary-navigation underline-indicators grid">
-              <div className="logo" alt="logo"></div>
-                <li className="nav-item">
-                  <a className="uppercase ff-source text-dark letter-spacing-2 active" href="#" onClick={togglePosMode}>
-                  <i className="fas fa-cash-register"></i>
+              <ul data-visible="false" data-nav="true" className="primary-navigation underline-indicators grid">
+              <div className="logo" alt="logo" data-nav="true"></div>
+                <li className="nav-item" data-nav="true">
+                  <a className="uppercase ff-source text-dark letter-spacing-2 active" href="#" data-nav="true" onClick={togglePosMode}>
+                  <i className="fas fa-cash-register" data-nav="true"></i>
                   Point Of Sale<span className="sr-only">(current)</span>
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#"onClick={toggleAdminMode}>
-                  <i className="fas fa-chart-line"></i>
+                <li className="nav-item" data-nav="true">
+                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" data-nav="true"onClick={toggleAdminMode}>
+                  <i className="fas fa-chart-line" data-nav="true"></i>
                     Admin
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" onClick={toggleInventoryMode}>
-                  <i className="fas fa-boxes"></i>
+                <li className="nav-item" data-nav="true">
+                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" data-nav="true" onClick={toggleInventoryMode}>
+                  <i className="fas fa-boxes" data-nav="true"></i>
                     Inventory
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" onClick={toggleLowStockMode}>
-                  <i className="fas fa-truck-loading"></i>
+                <li className="nav-item" data-nav="true">
+                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" data-nav="true" onClick={toggleLowStockMode}>
+                  <i className="fas fa-truck-loading" data-nav="true"></i>
                     Low Stock
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" onClick={toggleBestSellerMode}>
-                  <i className="fas fa-award"></i>
+                <li className="nav-item" data-nav="true">
+                  <a className="uppercase ff-source text-dark letter-spacing-2" href="#" data-nav="true" onClick={toggleBestSellerMode}>
+                  <i className="fas fa-award" data-nav="true"></i>
                   Best Sellers
                   </a>
                 </li>
@@ -121,7 +131,7 @@ function App() {
           
 
           <main role="main">
-          <button className="mobile-nav-toggle" aria-controls="primary-navigation" onClick={() => toggleNav()}><span className="sr-only" aria-expanded="false">Menu</span></button>
+          <button className="mobile-nav-toggle" aria-controls="primary-navigation" data-nav="true" onClick={() => toggleNav()}><span className="sr-only" aria-expanded="false">Menu</span></button>
             {adminMode ? <Suspense fallback={<div>Loadind...</div>}><Admin /></Suspense>: null}
             {posMode ? <PoS /> : null}
             {inventoryMode ? <Suspense fallback={<div>Loadind...</div>}><Inventory /></Suspense> : null}
