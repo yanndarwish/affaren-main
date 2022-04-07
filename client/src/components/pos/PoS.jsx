@@ -813,7 +813,7 @@ const PoS = () => {
                                                 {loaded ? <TaxeComponent taxesId={taxesId} taxes={taxes}/> : <div>Loading...</div>}
                                             </div>
                                             <div className="flex">
-                                                <input type="number" step="0.01" aria-describedby="left-to-pay" id="left-to-pay" placeholder="Enter amount if split payment, or click total" defaultValue={leftToPay} data-numpad="true" onFocus={(e) => numPad(e)}/>
+                                                <input type="text" step="0.01" aria-describedby="left-to-pay" id="left-to-pay" placeholder="Enter amount if split payment, or click total" defaultValue={leftToPay} data-numpad="true" onFocus={(e) => numPad(e)}/>
                                                 <button type="button" className="btn btn-outline-neutral" onClick={remaining}>
                                                     Left to Pay
                                                 </button>
