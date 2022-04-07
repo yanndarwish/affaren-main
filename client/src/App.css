@@ -826,16 +826,29 @@ tr:nth-child(even) {
   color:white;
   background-color: hsl( var(--clr-dark) / .8);
   backdrop-filter: blur(1.5rem);
+  justify-items:center;
+  align-items:center;
+}
+
+.numpad-content > * {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width:5rem;
+  height:5rem;
+  border-radius:50%;
+  border:hsl( var(--clr-white) / .8) solid 1px;
+  box-shadow: 0 0 1rem 1rem hsla(var(--clr-dark) / .25);
 }
 
 .numpad-btn:nth-of-type(1) {
   grid-area: j;
-  border-bottom-left-radius:1rem;
+  /* border-bottom-left-radius:1rem; */
 }
 
 .numpad-btn:nth-of-type(2) {
   grid-area: a;
-  border-top-left-radius:1rem;
+  /* border-top-left-radius:1rem; */
 
 }
 
@@ -873,25 +886,18 @@ tr:nth-child(even) {
 
 .numpad-btn:nth-of-type(11) {
   grid-area: back;
-  border-top-right-radius: 1rem;
+  color: orange;
+  border: orange solid 1px;
+  /* border-top-right-radius: 1rem; */
 }
 
 .numpad-btn:nth-of-type(12) {
   grid-area: clear;
+  color: red;
+  border: red solid 1px;
 }
 
 .numpad-btn:nth-of-type(13) {
   grid-area: point;
-  border-bottom-right-radius: 1rem;
-}
-
-.numpad-content > * {
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  padding:1rem;
-}
-
-.numpad-btn {
-  border:hsl( var(--clr-white) / .8) solid 1px;
+  /* border-bottom-right-radius: 1rem; */
 }
