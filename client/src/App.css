@@ -818,10 +818,10 @@ tr:nth-child(even) {
   --gap:0;
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas: 
-    "a b c back"
+    "a b c hide"
     "d e f clear"
-    "g h i clear"
-    "j j j point"
+    "g h i back"
+    ". j point ."
     ;
   color:white;
   background-color: hsl( var(--clr-dark) / .8);
@@ -899,5 +899,8 @@ tr:nth-child(even) {
 
 .numpad-btn:nth-of-type(13) {
   grid-area: point;
-  /* border-bottom-right-radius: 1rem; */
+}
+
+.numpad-btn:nth-of-type(14) {
+  grid-area: hide;
 }

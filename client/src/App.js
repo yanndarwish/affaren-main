@@ -112,6 +112,7 @@ function App() {
                 <div className="numpad-btn" data-numpad="true" data-value="return" onClick={(e) => numpadAction(e)}>RETURN</div>
                 <div className="numpad-btn" data-numpad="true" data-value="clear" onClick={(e) => numpadAction(e)}>CLEAR</div>
                 <div className="numpad-btn" data-numpad="true" data-value="." onClick={(e) => numpadAction(e)}>.</div>
+                <div className="numpad-btn" data-value="hide">HIDE</div>
             </div>
         </div>
     )
