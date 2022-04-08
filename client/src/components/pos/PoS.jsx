@@ -92,6 +92,10 @@ const PoS = () => {
         let noBarcodePrice = document.getElementById('no-barcode-price').value;
         let noBarcodeQuantity = document.getElementById('no-barcode-quantity').value;
         let noBarcodeTaxe = document.getElementById('no-barcode-taxe').value;
+        if (noBarcodeName === 'Bonbon au Poids') {
+            console.log('yes')
+            noBarcodePrice = (noBarcodePrice * 2) / 100;
+        }
         if (noBarcodeName !== '' && noBarcodePrice !== '' && noBarcodeQuantity !== '' && noBarcodeTaxe !== '') {
             const newProduct = {
                 product_id: '',
@@ -112,13 +116,19 @@ const PoS = () => {
 
     const autoCompleteNoBarcode = () => {
         let noBarcodeName = document.getElementById('no-barcode-name').value;
-        let noBarcodeTaxe = document.getElementById('no-barcode-taxe').value;
+        let noBarcodePriceLabel = document.getElementById('no-barcode-price-label');
+
         if (noBarcodeName === 'Magazine') {
             document.getElementById('no-barcode-taxe').value = 2;
+            noBarcodePriceLabel.innerHTML = 'Price';
         } else if (noBarcodeName === 'Décoration' || noBarcodeName === 'Alcool') {
             document.getElementById('no-barcode-taxe').value = 3;
+            noBarcodePriceLabel.innerHTML = 'Price';
+        } else if (noBarcodeName === 'Bonbon au Poids') {
+            noBarcodePriceLabel.innerHTML = 'Poids en Grammes';
         } else {
             document.getElementById('no-barcode-taxe').value = 1;
+            noBarcodePriceLabel.innerHTML = 'Price';
         }
     }
 
@@ -647,7 +657,7 @@ const PoS = () => {
                                             </select>
                                             {/* <input type="text" /> */}
                                             <div>
-                                                <span>Price</span>
+                                                <span id="no-barcode-price-label">Price</span>
                                             </div>
                                             <input type="text" aria-describedby="no-barcode-price" id="no-barcode-price" data-numpad="true" onFocus={(e) => numPad(e)}/>
                                             <div>
