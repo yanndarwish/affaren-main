@@ -670,14 +670,15 @@ tr:nth-child(even) {
 
 .card {
   position:relative;
-  height:13rem;
   background-color: hsl(var(--clr-white) / .05);
   backdrop-filter: blur(1.5rem);
   border-radius: .5rem;
   box-shadow: 0 0 .5rem hsla(var(--clr-dark) / .15);
   overflow:hidden;
-  
+}
 
+.card-container > * {
+  height:13rem;
 }
 
 .card > .card-img-top {
