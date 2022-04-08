@@ -93,7 +93,6 @@ const PoS = () => {
         let noBarcodeQuantity = document.getElementById('no-barcode-quantity').value;
         let noBarcodeTaxe = document.getElementById('no-barcode-taxe').value;
         if (noBarcodeName === 'Bonbon au Poids') {
-            console.log('yes')
             noBarcodePrice = (noBarcodePrice * 2) / 100;
         }
         if (noBarcodeName !== '' && noBarcodePrice !== '' && noBarcodeQuantity !== '' && noBarcodeTaxe !== '') {
