@@ -675,10 +675,12 @@ tr:nth-child(even) {
   border-radius: .5rem;
   box-shadow: 0 0 .5rem hsla(var(--clr-dark) / .15);
   overflow:hidden;
+  padding:1rem;
 }
 
 .card-container > * {
   height:13rem;
+  padding:0;
 }
 
 .card > .card-img-top {
