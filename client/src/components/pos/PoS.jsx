@@ -677,24 +677,34 @@ const PoS = () => {
                     </div>
                     <div className="card-container flex">
                         <div className="card" style={{"zIndex":"1"}} data-id="1132" data-name="Bulle" data-price="3" data-taxe_id="1" onClick={(e) => addProductFromCard(e)}>
-                            <img className="card-img-top" src="..." alt="bullar" />
-                            <p className="card-text">Bulle</p>
+                            <div className="card-img-top bulle" ></div>
+                            <div className="card-info">
+                                <p className="card-text">Bulle</p>
+                            </div>
                         </div>
                         <div className="card" style={{"zIndex":"1"}} data-id="1133" data-name="Bullar X4" data-price="10" data-taxe_id="1" onClick={(e) => addProductFromCard(e)}>
-                            <img className="card-img-top" src="..." alt="bullar x4" />
-                            <p className="card-text">Bullar x4</p>
+                        <div className="card-img-top bullar" ></div>
+                            <div className="card-info">
+                                <p className="card-text">Bullar X4</p>
+                            </div>
                         </div>
                         <div className="card" style={{"zIndex":"1"}} data-id="1134" data-name="Sandwich" data-price="6" data-taxe_id="1" onClick={(e) => addProductFromCard(e)}>
-                            <img className="card-img-top" src="..." alt="sandwich" />
-                            <p className="card-text">Sandwich</p>
+                        <div className="card-img-top sandwich" ></div>
+                            <div className="card-info">
+                                <p className="card-text">Sandwich</p>
+                            </div>
                         </div>
                         <div className="card" style={{"zIndex":"1"}} data-id="1135" data-name="Formule sandwich" data-price="10" data-taxe_id="1" onClick={(e) => addProductFromCard(e)}>
-                            <img className="card-img-top" src="..." alt="formule sandwich" />
-                            <p className="card-text">Formule Sandwich</p>
+                        <div className="card-img-top formule-sandwich" ></div>
+                            <div className="card-info">
+                                <p className="card-text">Formule Sandwich</p>
+                            </div>
                         </div>
                         <div className="card" style={{"zIndex":"1"}} data-id="1150" data-name="Café/Thé" data-price="2" data-taxe_id="1" onClick={(e) => addProductFromCard(e)}>
-                            <img className="card-img-top" src="..." alt="café" />
-                            <p className="card-text">Café/Thé</p>
+                        <div className="card-img-top café" ></div>
+                            <div className="card-info">
+                                <p className="card-text">Café/Thé</p>
+                            </div>
                         </div>
                         {/* ADD PASTRIES MODAL HERE */}
                     </div>
