@@ -510,7 +510,6 @@ const PoS = () => {
     }
 
     const openModal = (e) => {
-        console.log(e.target.dataset.toggle)
         const modal = document.querySelector(`.${e.target.dataset.toggle}`)
         const modalToggle = document.querySelector(`.${e.target.dataset.toggle}-toggle`)
         const modalDialog = document.querySelector(`.${e.target.dataset.toggle}-dialog`)
@@ -571,7 +570,6 @@ const PoS = () => {
     const discount = () => {
         const discountAmount = document.getElementById('discount-amount').value
         let discountOperator = 1 - (discountAmount / 100)
-        console.log(discountOperator)
         const checkboxes = document.querySelector('.product-discount-container').querySelectorAll('input[type="checkbox"]')
         checkboxes.forEach(checkbox => {
             if (checkbox.checked) {
@@ -596,7 +594,6 @@ const PoS = () => {
     const numPad = (e) => {
         const numPad = document.getElementById('numPad')
         numPad.classList.add('visible')
-        console.log(e.target.id)
         numPad.setAttribute('data-active', e.target.id)
     }
 

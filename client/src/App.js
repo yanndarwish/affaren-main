@@ -80,9 +80,7 @@ function App() {
   }
 
   const numpadAction = (e) => {
-    console.log(e.target.dataset.value)
     const numPad = document.getElementById('numPad')
-    console.log(numPad.dataset.active)
     const activeInput = document.getElementById(numPad.dataset.active)
     if (e.target.dataset.value === 'return') {
         activeInput.value = activeInput.value.slice(0, -1)
