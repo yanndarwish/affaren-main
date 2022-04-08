@@ -125,7 +125,7 @@ const PoS = () => {
             document.getElementById('no-barcode-taxe').value = 3;
             noBarcodePriceLabel.innerHTML = 'Price';
         } else if (noBarcodeName === 'Bonbon au Poids') {
-            noBarcodePriceLabel.innerHTML = 'Poids en Grammes';
+            noBarcodePriceLabel.innerHTML = 'Weight in Grams';
         } else {
             document.getElementById('no-barcode-taxe').value = 1;
             noBarcodePriceLabel.innerHTML = 'Price';
