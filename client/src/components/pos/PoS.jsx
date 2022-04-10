@@ -244,7 +244,8 @@ const PoS = () => {
 
     //EDIT 
     const editOnChange = () => {
-        setEditing(false)
+        console.log(editing)
+        // setEditing(false)
         setTaxesId([]);
     }
     // Set sale id with the id of the sale to edit
@@ -252,8 +253,17 @@ const PoS = () => {
         setProducts([])
         const editInput = document.getElementById('edit-sale-id');
         const editId = editInput.value;
-        setSaleId(parseInt(editId));
-        setEditing(true)
+        if (editId !== '') {
+            setSaleId(editId);
+            setEditing(true);
+        } 
+        if (document.getElementById('edit-btn').innerHTML ==='Back') {
+            document.getElementById('edit-sale-id').value = '';
+            setEditing(false);
+            setTotal(0)
+            getLastSale()
+        }
+        
     }
     // get the products of that sale ID and set it to the products list
     const getEditSaleProducts = async () => {
@@ -652,7 +662,7 @@ const PoS = () => {
                         <h1 className="fs-700 ff-source">Sale n° {saleId}</h1>
                         <div className="flex">
                             <input type="number" placeholder="ID" aria-label="Sale ID to edit" id="edit-sale-id" onChange={editOnChange} data-numpad="true" onFocus={(e) => numPad(e)}/>
-                            <button id="edit-btn" className="btn btn-outline-neutral" type="button" onClick={editTransaction}>Edit Sale</button>
+                            <button id="edit-btn" className="btn btn-outline-neutral" type="button" onClick={editTransaction}>{editing ? 'Back': 'Edit'}</button>
                         </div>
                     </div>
                     <div className="container">
