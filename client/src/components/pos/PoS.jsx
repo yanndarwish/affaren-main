@@ -33,6 +33,7 @@ const PoS = () => {
     const [taxesId, setTaxesId] = useState([]);
     const [taxes, setTaxes] = useState([]);
     const [loaded, setLoaded] = useState(false);
+    const [discountMode, setDiscountMode] = useState('Percent');
     // const [discountPercentage, setDiscountPercentage] = useState(1);
     let [leftToPay, setLeftToPay] = useState(0);
     let [paid, setPaid] = useState(0);
@@ -580,23 +581,54 @@ const PoS = () => {
 
     const discount = () => {
         const discountAmount = document.getElementById('discount-amount').value
-        let discountOperator = 1 - (discountAmount / 100)
-        const checkboxes = document.querySelector('.product-discount-container').querySelectorAll('input[type="checkbox"]')
-        checkboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-                const index = checkbox.dataset.index
-                const product = products[index]
-                const newProduct = {
-                    ...product,
-                    product_price: Math.round((product.product_price * discountOperator) * 1000) / 1000
+
+        if (discountMode === 'Percent') {
+            let discountOperator = 1 - (discountAmount / 100)
+            const checkboxes = document.querySelector('.product-discount-container').querySelectorAll('input[type="checkbox"]')
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    const index = checkbox.dataset.index
+                    const product = products[index]
+                    const newProduct = {
+                        ...product,
+                        product_price: Math.round((product.product_price * discountOperator) * 1000) / 1000
+                    }
+                    products[index] = newProduct
                 }
-                products[index] = newProduct
-            }
-        })
+            })
+        } else {
+            const checkboxes = document.querySelector('.product-discount-container').querySelectorAll('input[type="checkbox"]')
+            let checked = 0
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checked += 1
+                }
+            })
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    console.log(checked)
+                    const index = checkbox.dataset.index
+                    const product = products[index]
+                    const newProduct = {
+                        ...product,
+                        product_price: Math.round((product.product_price - (discountAmount / checked )) * 1000) / 1000
+                    }
+                    products[index] = newProduct
+                }
+            })
+        }
         setProducts(products)
         setQtyUpdated(true)
     }
 
+    const toggleDiscountMode = () => {
+        if (discountMode === 'Percent') {
+            setDiscountMode('Amount')
+        } else {
+            setDiscountMode('Percent')
+        }
+        console.log(discountMode)
+    }
     const receipt = () => {
         printer(products, taxes, total, time)
     }
@@ -780,6 +812,7 @@ const PoS = () => {
                                             
                                             <div className="flex">
                                                 <input type="number" aria-describedby="discount amount" id="discount-amount" placeholder="Discount percentage" data-numpad="true" onFocus={(e) => numPad(e)}/>
+                                            <button type="button" className="btn btn-outline-neutral" onClick={() => toggleDiscountMode()}>{discountMode}</button>
                                             </div>
                                             <div className="btn btn-discount-container btn-outline-neutral flex">
                                                 <input type="checkbox" id="discount-all" onClick={(e) => toggleAllCheckboxes(e)} />
