@@ -73,7 +73,7 @@ const PoS = () => {
                     product_name: productData.product_name,
                     product_price: productData.product_price,
                     product_quantity: 1,
-                    product_barcode: productData.product_barcode,
+                    product_barcode: barcode,
                     product_taxe: productData.taxe_id
                 }
                 setProducts([...products, newProduct]);
