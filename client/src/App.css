@@ -557,6 +557,10 @@ tr:nth-child(even) {
   margin-bottom:2rem;
 }
 
+#barcode-input {
+  width:15ch;
+}
+
 .modal {
   background-color: hsl( var(--clr-dark) / .8);
   position:fixed;

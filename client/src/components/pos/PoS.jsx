@@ -667,7 +667,7 @@ const PoS = () => {
                     </div>
                     <div className="container">
                         <div className="flex barcode-section">
-                            <input className="form-control" value={barcode} onChange={e => setBarcode((e.target.value))} placeholder='Enter barcode' autoFocus id='barcode-input'/>
+                            <input id='barcode-input' className="form-control" value={barcode} onChange={e => setBarcode((e.target.value))} placeholder='Enter barcode' autoFocus/>
                             {/* no barcode product */}
                                 <button className="btn btn-outline-neutral" onClick={() => reset()}>Reset</button>
                             <button type="button" className="btn btn-outline-neutral no-barcode-modal-toggle" data-toggle="no-barcode-modal" aria-expanded="false" onClick={(e) => openModal(e)}>
