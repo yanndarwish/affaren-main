@@ -881,17 +881,17 @@ tr:nth-child(even) {
 }
 
 .numpad-btn:nth-of-type(2) {
-  grid-area: a;
+  grid-area: g;
   /* border-top-left-radius:1rem; */
 
 }
 
 .numpad-btn:nth-of-type(3) {
-  grid-area: b;
+  grid-area: h;
 }
 
 .numpad-btn:nth-of-type(4) {
-  grid-area: c;
+  grid-area: i;
 }
 
 .numpad-btn:nth-of-type(5) {
@@ -907,15 +907,15 @@ tr:nth-child(even) {
 }
 
 .numpad-btn:nth-of-type(8) {
-  grid-area: g;
+  grid-area: a;
 }
 
 .numpad-btn:nth-of-type(9) {
-  grid-area: h;
+  grid-area: b;
 }
 
 .numpad-btn:nth-of-type(10) {
-  grid-area: i;
+  grid-area: c;
 }
 
 .numpad-btn:nth-of-type(11) {
