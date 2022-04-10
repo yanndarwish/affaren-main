@@ -606,7 +606,6 @@ const PoS = () => {
             })
             checkboxes.forEach(checkbox => {
                 if (checkbox.checked) {
-                    console.log(checked)
                     const index = checkbox.dataset.index
                     const product = products[index]
                     const newProduct = {
@@ -627,7 +626,6 @@ const PoS = () => {
         } else {
             setDiscountMode('Percent')
         }
-        console.log(discountMode)
     }
     const receipt = () => {
         printer(products, taxes, total, time)
