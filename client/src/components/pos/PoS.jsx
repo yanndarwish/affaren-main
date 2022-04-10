@@ -70,7 +70,7 @@ const PoS = () => {
                 const productData = await product.json();
                 //add product to products list but set product_quantity to 1
                 const newProduct = {
-                    product_id: productData.product_id,
+                    product_id: parseInt(productData.product_id),
                     product_name: productData.product_name,
                     product_price: productData.product_price,
                     product_quantity: 1,
@@ -441,18 +441,21 @@ const PoS = () => {
         for (let i=0; i<products.length; i++) {
             try {
                 let id = products[i].product_id;
-                let quantity = products[i].product_quantity;
-                if (id !== '') {
-                    const closeStock = await fetch(`http://${ip}:5000/close/products/${id}/stock`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            quantity: quantity
-                        })
-                    });
-                    const closeStockData = await closeStock.json();
+                if (typeof id === 'number') {
+
+                    let quantity = products[i].product_quantity;
+                    if (id !== '') {
+                        const closeStock = await fetch(`http://${ip}:5000/close/products/${id}/stock`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                quantity: quantity
+                            })
+                        });
+                        const closeStockData = await closeStock.json();
+                    }
                 }
             }
             catch (err) {
