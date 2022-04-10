@@ -22,8 +22,9 @@ const LowStock = () => {
 
     //export this table to excel
     const exportToExcel = () => {
+        const table = document.getElementById('low-stock-table');
         const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(lowStockProducts);
+        const ws = XLSX.utils.table_to_sheet(table);
         XLSX.utils.book_append_sheet(wb, ws, 'Low Stock Products');
         XLSX.writeFile(wb, 'Low Stock Products.xlsx');
     }

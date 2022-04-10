@@ -4,8 +4,9 @@ const XLSX = require('xlsx');
 
 const DailyBestSellersComponent = ({selectedDate, dailyBestSellers}) => {
     const exportDailyBestSellers = () => {
+        const table = document.getElementById('daily-table')
         const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(dailyBestSellers);
+        const ws = XLSX.utils.table_to_sheet(table);
         XLSX.utils.book_append_sheet(wb, ws, `${selectedDate} Best Sellers`);
         XLSX.writeFile(wb, `${selectedDate} Best Sellers.xlsx`);
     }
@@ -17,7 +18,7 @@ const DailyBestSellersComponent = ({selectedDate, dailyBestSellers}) => {
             </div>
             <div className="card-body">
                 <div>
-                    <table className="table">
+                    <table id="daily-table" className="table">
                         <thead>
                             <tr>
                             <th scope="col">Product</th>

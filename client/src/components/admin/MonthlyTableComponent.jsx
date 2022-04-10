@@ -2,7 +2,7 @@ import React from "react";
 
 const MonthlyTableComponent = ({monthlyTable}) => {
     return (
-        <div className="monthly-details">
+        <div id="month-table" className="monthly-details">
             <table className="table">
                 <thead>
                     <tr>

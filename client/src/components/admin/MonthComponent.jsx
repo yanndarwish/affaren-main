@@ -25,8 +25,9 @@ const MonthComponent = ({selectedDate, selectedMonth, sales, monthlyTable }) => 
     const exportToExcel = () => {
         let month = selectedDate.slice(5,7);
         let year = selectedDate.slice(0,4);
+        const table = document.getElementById('month-table');
         const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(monthlyTable);
+        const ws = XLSX.utils.table_to_sheet(table);
         XLSX.utils.book_append_sheet(wb, ws, `${months[month-1]}-${year}`);
         XLSX.writeFile(wb, `${months[month-1]}-${year}.xlsx`);
     }

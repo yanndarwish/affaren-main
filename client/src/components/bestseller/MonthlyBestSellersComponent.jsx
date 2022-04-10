@@ -14,8 +14,9 @@ const MonthlyBestSellersComponent = ({selectedDate, monthlyBestSellers}) => {
         //get month name from selected date
         let month = selectedDate.slice(5,7);
         let monthName = months[month-1];
+        const table= document.getElementById('monthly-table')
         const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(monthlyBestSellers);
+        const ws = XLSX.utils.table_to_sheet(table);
         XLSX.utils.book_append_sheet(wb, ws, `${monthName} Best Sellers`);
         XLSX.writeFile(wb, `${monthName} Best Sellers.xlsx`);
     }
@@ -28,7 +29,7 @@ const MonthlyBestSellersComponent = ({selectedDate, monthlyBestSellers}) => {
             </div>
             <div className="card-body">
                 <div>
-                    <table className="table">
+                    <table id="monthly-table" className="table">
                         <thead>
                             <tr>
                             <th scope="col">Product</th>

@@ -3,7 +3,7 @@ import React from "react";
 const LowStockProductsComponent = ({lowStockProducts}) => {
     return (
         <div className="container">
-            <table className="table table-striped">
+            <table id="low-stock-table" className="table table-striped">
                 <thead>
                     <tr>
                     <th scope="col">Product</th>
