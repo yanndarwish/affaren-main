@@ -704,6 +704,17 @@ tr:nth-child(even) {
   background-image: url(./assets/images/bullar-x4.png)
 }
 
+.frozen-bulle {
+  background-image: url(./assets/images/bulle.png);
+  filter: hue-rotate(130deg);
+}
+
+.frozen-bullar {
+  background-image: url(./assets/images/bullar-x4.png);
+  filter: hue-rotate(130deg);
+
+}
+
 .sandwich {
   background-image: url(./assets/images/sandwich.jpeg);
 }
