@@ -105,10 +105,10 @@ const PoS = () => {
                 product_taxe: parseInt(noBarcodeTaxe)
             }
             setProducts([...products, newProduct]);
-            noBarcodeName = '';
-            noBarcodePrice = '';
-            noBarcodeQuantity = '';
-            noBarcodeTaxe = '';
+            document.getElementById('no-barcode-name').value = "Produit d'épicerie";
+            document.getElementById('no-barcode-price').value = '';
+            document.getElementById('no-barcode-quantity').value = 1;
+            document.getElementById('no-barcode-taxe').value = 1;
             setQtyUpdated(true);
         }
     }
