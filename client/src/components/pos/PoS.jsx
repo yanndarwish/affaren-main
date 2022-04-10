@@ -109,6 +109,7 @@ const PoS = () => {
             document.getElementById('no-barcode-price').value = '';
             document.getElementById('no-barcode-quantity').value = 1;
             document.getElementById('no-barcode-taxe').value = 1;
+            document.getElementById('barcode-input').focus()
             setQtyUpdated(true);
         }
     }
@@ -153,6 +154,7 @@ const PoS = () => {
             }
             setProducts([...products, newProduct]);
         }
+        document.getElementById('barcode-input').focus();
         setQtyUpdated(true);
     }
 
