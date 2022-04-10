@@ -15,8 +15,6 @@ const CartComponent = ({products, setProducts, setQtyUpdated}) => {
     }
 
     const substractOne = (e) => {
-        console.log(e.target.dataset.id)
-
         products.map(product => {
             if (product.product_id == e.target.dataset.id) {
                 product.product_quantity -= 1;
@@ -31,7 +29,6 @@ const CartComponent = ({products, setProducts, setQtyUpdated}) => {
 
     //add 1 to product quantity
     const addOne = (e) => {
-        console.log(e.target.dataset.id)
         products.map(product => {
             if (product.product_id == e.target.dataset.id) {
                 product.product_quantity += 1;
@@ -47,7 +44,6 @@ const CartComponent = ({products, setProducts, setQtyUpdated}) => {
                 product.product_quantity = parseInt(e.target.value);
             }
         })
-        console.log(products)
         setQtyUpdated(true);
         setProducts(products);
     }

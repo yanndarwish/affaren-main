@@ -97,7 +97,7 @@ const PoS = () => {
         }
         if (noBarcodeName !== '' && noBarcodePrice !== '' && noBarcodeQuantity !== '' && noBarcodeTaxe !== '') {
             const newProduct = {
-                product_id: '',
+                product_id: noBarcodeName + products.length,
                 product_name: noBarcodeName,
                 product_price: noBarcodePrice,
                 product_quantity: parseInt(noBarcodeQuantity),
