@@ -2,19 +2,22 @@ import React, {useState} from "react";
 import ip from '../../ip'
 
 const SalesComponent = ( {filteredSales}) => {
-    const [saleId, setSaleId] = useState('');
+    const [id, setId] = useState('');
+    let saleId
+    const [products, setProducts] = useState([]);
+    let saleProducts = []
 
     // delete a transaction
     const deleteTransaction = async () => {
-        console.log(saleId);
         try {
-            const response = await fetch(`http://${ip}:5000/sales/${saleId}`, {
+            updateStock()
+            const response = await fetch(`http://${ip}:5000/sales/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
-            const otherResponse = await fetch(`http://${ip}:5000/transactions/${saleId}`, {
+            const otherResponse = await fetch(`http://${ip}:5000/transactions/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -27,15 +30,52 @@ const SalesComponent = ( {filteredSales}) => {
         }
     }
 
-    const openModal = (e) => {
+    // update stock of products of the deleted transaction
+    const updateStock = async () => {
+        for (let i = 0; i < products.length; i++) {
+            if (typeof products[i].product_id === 'string') {
+                try {
+
+                    const response = await fetch(`http://${ip}:5000/stock/edit/${products[i].product_id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            quantity: products[i].quantity
+                        })
+                    })
+                } catch (err) {
+                    console.error(err.message)
+                }
+            }
+        }
+        
+    }
+
+
+    const openModal = async (e) => {
+        saleProducts = []
         const modal = document.querySelector(`.${e.target.dataset.toggle}`)
         const modalToggle = document.querySelector(`.${e.target.dataset.toggle}-toggle`)
         const modalDialog = document.querySelector(`.${e.target.dataset.toggle}-dialog`)
-        setSaleId(e.target.dataset.id);
+        setId(e.target.dataset.id)
+        saleId = e.target.dataset.id;
         modal.setAttribute("data-visible", true)
         modal.setAttribute("aria-hidden", false)
         modalToggle.setAttribute("aria-expanded", true)
         modalDialog.setAttribute("data-visible", true)
+        // get products of the transaction
+        try {
+            console.log(saleId)
+            const response = await fetch(`http://${ip}:5000/sales/${saleId}`);
+            const data = await response.json();
+            setProducts(data)
+            saleProducts.push(data);
+            console.log(saleProducts)
+        } catch (err) {
+            console.error(err.message);
+        }
     }
 
     const closeModal = (e) => {
@@ -43,7 +83,7 @@ const SalesComponent = ( {filteredSales}) => {
             const modal = document.querySelector(`.${e.target.dataset.toggle}`)
             const modalToggle = document.querySelector(`.${e.target.dataset.toggle}-toggle`)
             const modalDialog = document.querySelector(`.${e.target.dataset.toggle}-dialog`)
-
+            console.log(products)
             modal.setAttribute("data-visible", false)
             modal.setAttribute("aria-hidden", true)
             modalToggle.setAttribute("aria-expanded", false)
@@ -120,7 +160,7 @@ const SalesComponent = ( {filteredSales}) => {
                             <div className="modal-dialog delete-sale-modal-dialog" role="document" data-visible="false">
                                 <div>
                                     <div className="modal-header">
-                                        <h5 className="fs-500">Delete Sale <span>{saleId}</span> </h5>
+                                        <h5 className="fs-500">Delete Sale <span>{id}</span> </h5>
                                         <button type="button" className="close-btn" data-toggle="delete-sale-modal" onClick={(e) => closeModal(e)} aria-label="Close">
                                             <span aria-hidden="true" data-toggle="delete-sale-modal">&times;</span>
                                         </button>

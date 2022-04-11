@@ -169,6 +169,25 @@ app.put("/close/products/:product_id/stock", async (req, res) => {
     }
 })
 
+app.put("/stock/edit/:product_id", async (req, res) => {
+    try {
+
+        const {
+            product_id
+        } = req.params;
+        const {
+            quantity
+        } = req.body;
+    
+        console.log(product_id);
+        console.log(quantity);
+        const newProduct = await pool.query(`UPDATE products SET product_quantity = product_quantity + ${quantity} WHERE product_id = $1 RETURNING *`, [product_id]);
+        res.json(newProduct.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
 // Set all the account info in sales_transactions
 app.put("/accounting/sales/:sale_id", async (req, res) => {
     try {
