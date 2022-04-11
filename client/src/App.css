@@ -579,7 +579,8 @@ tr:nth-child(even) {
 .clear-cart-modal[data-visible="true"],
 .checkout-modal[data-visible="true"],
 .month-detail-modal[data-visible="true"],
-.discount-modal[data-visible="true"] {
+.discount-modal[data-visible="true"],
+.delete-sale-modal[data-visible="true"] {
   z-index:50;
   display:flex;
 }
@@ -615,7 +616,8 @@ tr:nth-child(even) {
 .clear-cart-modal-dialog[data-visible="true"],
 .checkout-modal-dialog[data-visible="true"],
 .month-detail-modal-dialog[data-visible="true"],
-.discount-modal-dialog[data-visible="true"] {
+.discount-modal-dialog[data-visible="true"],
+.delete-sale-modal-dialog[data-visible="true"] {
   transform: translateY(0%);
   -webkit-transform: translateY(0%);
   -moz-transform: translateY(0%);

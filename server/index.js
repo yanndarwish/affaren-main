@@ -87,6 +87,18 @@ app.get("/last-sale", async (req, res) => {
     }
 })
 
+// delete a sales transaction
+app.delete("/transactions/:sale_id", async (req, res) => {
+    try {
+        const {
+            sale_id
+        } = req.params;
+        const deleteSale = await pool.query("DELETE FROM sales_transactions WHERE sale_id = $1", [sale_id]);
+        res.json(deleteSale.rows[0]);
+    } catch (err) {
+        console.error(err.message)
+    }
+})
 // PRODUCTS IN TRANSACTION
 
 // add a product to a transaction
@@ -180,7 +192,6 @@ app.put("/accounting/sales/:sale_id", async (req, res) => {
             sale_day,
             sale_time
         } = req.body;
-        console.log(sale_day)
         const closeSale = await pool.query(`UPDATE sales_transactions SET sale_total = $1, taxe_amount = $2, tva_1 = $3, tva_2 = $4, tva_3 = $5, hors_taxe_1 = $6, hors_taxe_2 = $7, hors_taxe_3 = $8, total_1 = $9, total_2 = $10, total_3 = $11, sale_year = $12, sale_month = $13, sale_day = $14, sale_time = $15 WHERE sale_id = $16 RETURNING *`, [sale_total, taxe_amount, tva_1, tva_2, tva_3, hors_taxe_1, hors_taxe_2, hors_taxe_3, total_1, total_2, total_3, sale_year, sale_month, sale_day, sale_time, sale_id]);
         res.json(closeSale.rows[0]);
     } catch (err) {
