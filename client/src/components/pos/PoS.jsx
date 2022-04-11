@@ -374,7 +374,26 @@ const PoS = () => {
 
             //if editing(true) delete ewerything from the products_in_transactions before adding new products
             if (editing) {
+                console.log(products)
+                for (let i = 0; i < products.length; i++) {
+                    if (typeof products[i].product_id === 'string') {
+                        try {
+                            const response = await fetch(`http://${ip}:5000/stock/edit/${products[i].product_id}`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    quantity: products[i].product_quantity
+                                })
+                            })
+                        } catch (err) {
+                            console.error(err.message)
+                        }
+                    }
+                }
                 try {
+                    
                     const response = await fetch(`http://${ip}:5000/reset/sales/${saleId}`, {
                         method: 'PUT'
                     });
@@ -382,6 +401,7 @@ const PoS = () => {
                 } catch (err) {
                     console.error(err.message)
                 }
+                document.getElementById('edit-sale-id').value = '';
             }
 
             if (leftToPay !== 0 && leftToPay > 0) {
