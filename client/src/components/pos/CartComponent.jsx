@@ -25,6 +25,8 @@ const CartComponent = ({products, setProducts, setQtyUpdated}) => {
         })
         setQtyUpdated(true);
         setProducts(products);
+        document.getElementById('barcode-input').focus()
+
     }
 
     //add 1 to product quantity
@@ -36,6 +38,8 @@ const CartComponent = ({products, setProducts, setQtyUpdated}) => {
         })
         setQtyUpdated(true);
         setProducts(products);
+        document.getElementById('barcode-input').focus()
+
     }
 
     const setQuantity = (e) => {

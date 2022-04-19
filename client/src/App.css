@@ -392,6 +392,10 @@ input, select {
   mix-blend-mode: normal;
   color: rgb(5, 109, 250);
 }
+
+.contrast {
+  color:white;
+}
 /* ------------- */
 /* NAV           */
 /* ------------- */
@@ -748,6 +752,9 @@ tr:nth-child(even) {
 }
 
 .cart {
+  display:flex;
+  flex-direction:column-reverse;
+  justify-content:flex-end;
   margin-block:2rem;
   max-height:35vh;
   align-self:center;

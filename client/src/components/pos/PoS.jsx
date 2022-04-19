@@ -261,6 +261,8 @@ const PoS = () => {
             document.getElementById('edit-sale-id').value = '';
             setEditing(false);
             setTotal(0)
+            setTaxesId([]);
+            setTaxes([]);
             getLastSale()
         }
         
@@ -371,7 +373,6 @@ const PoS = () => {
             paid += Math.round(paidValue *100)/100;
             leftToPay = Math.round((total - paid) * 100) / 100;
             const checked = document.querySelector('input[name="payment-method"]:checked').value;
-
             //if editing(true) delete ewerything from the products_in_transactions before adding new products
             if (editing) {
                 console.log(products)
@@ -423,7 +424,8 @@ const PoS = () => {
             }
             if (leftToPay <= 0) {
                 printer()
-                if (paidValue > leftToPay) {
+                const checked = document.querySelector('input[name="payment-method"]:checked').value;
+                if (checked == 1) {
                     alert('Change : ' + Math.abs(leftToPay) + ' €')
                 }
                 try {
@@ -908,7 +910,7 @@ const PoS = () => {
                                             </div>
                                             <div className="flex">
                                                 <input type="text" step="0.01" aria-describedby="left-to-pay" id="left-to-pay" placeholder="Enter amount if split payment, or click total" defaultValue={leftToPay} data-numpad="true" onFocus={(e) => numPad(e)}/>
-                                                <button type="button" className="btn btn-outline-neutral" onClick={remaining}>
+                                                <button type="button" className="btn btn-outline-neutral contrast" onClick={remaining}>
                                                     Left to Pay
                                                 </button>
                                             </div>
