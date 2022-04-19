@@ -910,7 +910,7 @@ const PoS = () => {
                                             </div>
                                             <div className="flex">
                                                 <input type="text" step="0.01" aria-describedby="left-to-pay" id="left-to-pay" placeholder="Enter amount if split payment, or click total" defaultValue={leftToPay} data-numpad="true" onFocus={(e) => numPad(e)}/>
-                                                <button type="button" className="btn btn-outline-neutral contrast" onClick={remaining}>
+                                                <button type="button" className="btn btn-outline-success contrast" onClick={remaining}>
                                                     Left to Pay
                                                 </button>
                                             </div>
