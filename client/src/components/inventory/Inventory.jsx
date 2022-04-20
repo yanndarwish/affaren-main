@@ -91,7 +91,7 @@ const Inventory = () => {
             const response = await addProduct.json();
             console.log(response);
             // show alert that product has been added
-
+            alert('Product has been added');
             // //reset the product and barcode input
             setProduct()
             setBarcode('')

@@ -4,7 +4,6 @@ const DisplayProductComponent = ({product, editProduct}) => {
     const numPad = (e) => {
         const numPad = document.getElementById('numPad')
         numPad.classList.add('visible')
-        console.log(e.target.id)
         numPad.setAttribute('data-active', e.target.id)
     }
 
