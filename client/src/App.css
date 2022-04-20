@@ -529,9 +529,11 @@ input, select {
   height:20rem;
 }
 
-.card-header {
+.card-header, 
+.card-body {
   justify-content: space-between;
 }
+
 
 .table {
   padding:1rem;
