@@ -244,7 +244,6 @@ const PoS = () => {
 
     //EDIT 
     const editOnChange = () => {
-        console.log(editing)
         // setEditing(false)
         setTaxesId([]);
     }
@@ -284,6 +283,16 @@ const PoS = () => {
                 products.push(newProduct);
                 setQtyUpdated(true);
             }
+        } catch (err) {
+            console.error(err.message)
+        }
+        // get the payment method of that sale ID and set it to the payment method state
+        try {
+            const response = await fetch(`http://${ip}:5000/edit/sales/${saleId}`);
+            const data = await response.json();
+            let paymentMethod = data.payment_method_id;
+            document.querySelector(`input[name="payment-method"][value="${paymentMethod}"]`).checked = true;
+
         } catch (err) {
             console.error(err.message)
         }

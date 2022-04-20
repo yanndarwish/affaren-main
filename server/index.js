@@ -281,6 +281,18 @@ app.get("/sales", async (req,res) => {
     }
 })
 
+// get specific sale
+app.get("/edit/sales/:sale_id", async (req,res) => {
+    try {
+        const { sale_id } = req.params
+        const allSales = await pool.query(`SELECT * FROM sales_transactions WHERE sale_id = $1`, [sale_id]);
+        res.json(allSales.rows[0]);
+    } catch (err) {
+        console.error(err.message)
+    }
+})
+
+
 //delete all the products of this sale in products_in_transactions
 app.put("/reset/sales/:sale_id", async (req,res) => {
     try {
