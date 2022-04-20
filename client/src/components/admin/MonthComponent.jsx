@@ -32,30 +32,6 @@ const MonthComponent = ({selectedDate, selectedMonth, sales, monthlyTable }) => 
         XLSX.writeFile(wb, `${months[month-1]}-${year}.xlsx`);
     }
 
-    const toggleModal = (e) => {
-        console.log(e.target.dataset.toggle)
-        const modal = document.querySelector(`.${e.target.dataset.toggle}`)
-        const modalToggle = document.querySelector(`.${e.target.dataset.toggle}-toggle`)
-        const modalDialog = document.querySelector(`.${e.target.dataset.toggle}-dialog`)
-        
-        if(e.target.dataset.action === "export") {
-            exportToExcel();
-        }
-
-        const visibility = modal.getAttribute("data-visible")
-        if (visibility === "false") {
-            modal.setAttribute("data-visible", true)
-            modal.setAttribute("aria-hidden", false)
-            modalToggle.setAttribute("aria-expanded", true)
-            modalDialog.setAttribute("data-visible", true)
-        } else {
-            modal.setAttribute("data-visible", false)
-            modal.setAttribute("aria-hidden", true)
-            modalToggle.setAttribute("aria-expanded", false)
-            modalDialog.setAttribute("data-visible", false)
-        }
-    }
-
     const openModal = (e) => {
         const modal = document.querySelector(`.${e.target.dataset.toggle}`)
         const modalToggle = document.querySelector(`.${e.target.dataset.toggle}-toggle`)

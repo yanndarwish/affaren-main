@@ -22,10 +22,10 @@ const printer = async(products, taxes, total, time ) => {
         
         if (obj) {
             printer = obj
-            if (products === undefined) {
+            if (products === undefined && filteredSales === undefined) {
                 printer.addPulse(printer.DRAWER_1,printer.PULSE_100)
                 printer.send()
-            } else {
+            } else if (products !== undefined && filteredSales === undefined) {
                 printer.addLayout(printer.LAYOUT_RECEIPT, 580,0,50,4,0,0)
                 printer.addTextAlign(printer.ALIGN_CENTER)
                 printer.addTextFont(printer.FONT_B)
@@ -132,6 +132,104 @@ const printer = async(products, taxes, total, time ) => {
                 printer.addFeedLine(1)
                 printer.addText('Merci de votre visite et à bientôt !\n')
                 printer.addText('Hejdå !\n')
+                printer.addFeedLine(1)
+                printer.addCut(printer.CUT_FEED)
+                printer.send()
+            } else if (products === undefined && filteredSales !== undefined) {
+                let totalAlim = 0
+                let totalMag = 0
+                let totalDeco = 0
+                let totalTva1 = 0
+                let totalTva2 = 0
+                let totalTva3 = 0
+                let totalTva = 0
+                let totalHt1 = 0
+                let totalHt2 = 0
+                let totalHt3 = 0
+                let totalHt = 0
+                let totalCash = todaysTotalCash
+                let totalCard = todaysTotalCard
+                let totalCheck = todaysTotalCheck
+                let total = 0
+                for (let i = 0; i < filteredSales.length; i++) {
+                    totalAlim += Math.round(filteredSales[i].total_1 *100)/100
+                    totalMag += Math.round(filteredSales[i].total_2 *100)/100
+                    totalDeco += Math.round(filteredSales[i].total_3 *100)/100
+                    totalTva1 += Math.round(filteredSales[i].tva_1 *100)/100
+                    totalTva2 += Math.round(filteredSales[i].tva_2 *100)/100
+                    totalTva3 += Math.round(filteredSales[i].tva_3 *100)/100
+                    totalTva += Math.round(filteredSales[i].taxe_amount *100)/100
+                    totalHt1 += Math.round(filteredSales[i].hors_taxe_1 *100)/100
+                    totalHt2 += Math.round(filteredSales[i].hors_taxe_2 *100)/100
+                    totalHt3 += Math.round(filteredSales[i].hors_taxe_3 *100)/100
+                    totalHt += Math.round((totalHt1 + totalHt2 + totalHt3) *100)/100
+                    total = Math.round((totalHt + totalTva) *100)/100
+                }
+                printer.addLayout(printer.LAYOUT_RECEIPT, 580,0,50,4,0,0)
+                printer.addTextAlign(printer.ALIGN_CENTER)
+                printer.addTextFont(printer.FONT_B)
+                printer.addText(`TOTAL DU JOUR\n`)
+                printer.addText(`${time.day}/${time.month}/${time.year}`)
+                printer.addFeedLine(1)
+                const getTime = () => {
+                    const date = new Date();
+                    const time = date.toLocaleTimeString();
+                    return time;
+                }
+                printer.addText(`${getTime()}\n`)
+                printer.addFeedLine(1)
+                printer.addText('--------------------------------------\n')
+                printer.addFeedLine(1)
+                printer.addTextAlign(printer.ALIGN_LEFT)
+                printer.addText('Total Alimentation 5.5%\n')
+                printer.addText(`${totalAlim}\n`)
+                printer.addText('Total Magazine 2.1%\n')
+                printer.addText(`${totalMag}\n`)
+                printer.addText('Total Décoration 20%\n')
+                printer.addText(`${totalDeco}\n`)
+                printer.addTextAlign(printer.ALIGN_CENTER)
+                printer.addFeedLine(1)
+                printer.addText('--------------------------------------\n')
+                printer.addFeedLine(1)
+                printer.addTextAlign(printer.ALIGN_LEFT)
+                printer.addText('Total HT Alimentation\n')
+                printer.addText(`${totalHt1}\n`)
+                printer.addText('Total HT Magazine\n')
+                printer.addText(`${totalHt2}\n`)
+                printer.addText('Total HT Décoration\n')
+                printer.addText(`${totalHt3}\n`)
+                printer.addTextAlign(printer.ALIGN_CENTER)
+                printer.addTextAlign(printer.ALIGN_LEFT)
+                printer.addText('Total TVA 5.5%\n')
+                printer.addText(`${totalTva1}\n`)
+                printer.addText('Total TVA 2.1%\n')
+                printer.addText(`${totalTva2}\n`)
+                printer.addText('Total TVA 20%\n')
+                printer.addText(`${totalTva3}\n`)
+                printer.addTextAlign(printer.ALIGN_CENTER)
+                printer.addFeedLine(1)
+                printer.addText('--------------------------------------\n')
+                printer.addFeedLine(1)
+                printer.addTextAlign(printer.ALIGN_LEFT)
+                printer.addText('Total HT\n')
+                printer.addText(`${totalHt}\n`)
+                printer.addText('Total TVA\n')
+                printer.addText(`${totalTva}\n`)
+                printer.addTextAlign(printer.ALIGN_CENTER)
+                printer.addFeedLine(1)
+                printer.addText('--------------------------------------\n')
+                printer.addFeedLine(1)
+                printer.addTextAlign(printer.ALIGN_LEFT)
+                printer.addText('Total Cash\n')
+                printer.addText(`${totalCash}\n`)
+                printer.addText('Total Card\n')
+                printer.addText(`${totalCard}\n`)
+                printer.addText('Total Check\n')
+                printer.addText(`${totalCheck}\n`)
+                printer.addFeedLine(1)
+                printer.addText('TOTAL\n')
+                printer.addTextAlign(printer.ALIGN_CENTER)
+                printer.addText(`${total}\n`)
                 printer.addFeedLine(1)
                 printer.addCut(printer.CUT_FEED)
                 printer.send()
