@@ -25,7 +25,7 @@ const printer = async(arg_1, arg_2, arg_3, arg_4, arg_5) => {
             if (arg_1 === undefined) {
                 printer.addPulse(printer.DRAWER_1,printer.PULSE_100)
                 printer.send()
-            } else if (arg_1 !== undefined) {
+            } else if (arg_1 !== undefined && arg_5 === undefined) {
                 // arg_1 = products
                 // arg_2 = arg_2
                 // arg_3 = total
