@@ -171,9 +171,9 @@ const printer = async(arg_1, arg_2, arg_3, arg_4, arg_5) => {
                     totalHt1 += Math.round(arg_1[i].hors_taxe_1 *100)/100
                     totalHt2 += Math.round(arg_1[i].hors_taxe_2 *100)/100
                     totalHt3 += Math.round(arg_1[i].hors_taxe_3 *100)/100
-                    totalHt += Math.round((totalHt1 + totalHt2 + totalHt3) *100)/100
-                    total = Math.round((totalHt + totalTva) *100)/100
                 }
+                total = Math.round((totalHt + totalTva) *100)/100
+                totalHt += Math.round((totalHt1 + totalHt2 + totalHt3) *100)/100
                 printer.addLayout(printer.LAYOUT_RECEIPT, 580,0,50,4,0,0)
                 printer.addTextAlign(printer.ALIGN_CENTER)
                 printer.addTextFont(printer.FONT_B)
