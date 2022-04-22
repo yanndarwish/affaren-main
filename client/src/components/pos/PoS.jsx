@@ -672,7 +672,7 @@ const PoS = () => {
         }
     }
     const receipt = () => {
-        printer(products, taxes, total, time)
+        printer(products, taxes, total, time, saleId)
     }
 
     // select all input type number

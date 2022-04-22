@@ -25,11 +25,13 @@ const printer = async(arg_1, arg_2, arg_3, arg_4, arg_5) => {
             if (arg_1 === undefined) {
                 printer.addPulse(printer.DRAWER_1,printer.PULSE_100)
                 printer.send()
-            } else if (arg_1 !== undefined && arg_5 === undefined) {
+            } else if (arg_1 !== undefined && arg_5 !== undefined) {
                 // arg_1 = products
                 // arg_2 = arg_2
                 // arg_3 = total
                 // arg_4 = time
+                // arg_5 = saleId
+                console.log(arg_5)
                 printer.addLayout(printer.LAYOUT_RECEIPT, 580,0,50,4,0,0)
                 printer.addTextAlign(printer.ALIGN_CENTER)
                 printer.addTextFont(printer.FONT_B)
@@ -54,8 +56,10 @@ const printer = async(arg_1, arg_2, arg_3, arg_4, arg_5) => {
                 }
                 printer.addText(`Date: ${arg_4.day}/${arg_4.month}/${arg_4.year}\t ${getTime()}\n`)
                 printer.addText('--------------------------------------\n')
-                printer.addFeedLine(1)
                 printer.addTextAlign(printer.ALIGN_LEFT)
+                printer.addTextPosition(100)
+                printer.addText(`Sale n°${arg_5}\n`)
+                printer.addFeedLine(1)
                 printer.addTextPosition(50)
                 printer.addText('n°')
                 printer.addTextPosition(100)
@@ -139,12 +143,10 @@ const printer = async(arg_1, arg_2, arg_3, arg_4, arg_5) => {
                 printer.addFeedLine(1)
                 printer.addCut(printer.CUT_FEED)
                 printer.send()
-            } else if (arg_5 !== undefined) {
+            } else if (arg_4 === undefined) {
                 // arg_1 = filteredSales
                 // arg_2 = time
-                // arg_3 = todaysTotalCash
-                // arg_4 = todaysTotalCard
-                // arg_5 = todaysTotalCheck
+                // arg_3 = totals
                 let totalAlim = 0
                 let totalMag = 0
                 let totalDeco = 0
@@ -156,9 +158,9 @@ const printer = async(arg_1, arg_2, arg_3, arg_4, arg_5) => {
                 let totalHt2 = 0
                 let totalHt3 = 0
                 let totalHt = 0
-                let totalCash = arg_3
-                let totalCard = arg_4
-                let totalCheck = arg_5
+                let totalCash = arg_3.cash
+                let totalCard = arg_3.card
+                let totalCheck = arg_3.check
                 let total = 0
                 for (let i = 0; i < arg_1.length; i++) {
                     totalAlim += Math.round(arg_1[i].total_1 *100)/100
