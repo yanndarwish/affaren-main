@@ -800,6 +800,24 @@ const PoS = () => {
                                 <p className="card-text">Café/Thé</p>
                             </div>
                         </div>
+                        <div className="card" style={{"zIndex":"1"}} data-id="1331" data-name="Bonbon pièce" data-price="0.2" data-taxe_id="1" onClick={(e) => addProductFromCard(e)}>
+                            <div className="card-img-top bonbon-piece" ></div>
+                            <div className="card-info" data-id="1331" data-name="Bonbon pièce" data-price="0.2" data-taxe_id="1" onClick={(e) => addProductFromCard(e)}>
+                                <p className="card-text">Bonbon pièce</p>
+                            </div>
+                        </div>
+                        <div className="card" style={{"zIndex":"1"}} data-id="1332" data-name="Sucette" data-price="0.5" data-taxe_id="1" onClick={(e) => addProductFromCard(e)}>
+                            <div className="card-img-top sucette" ></div>
+                            <div className="card-info" data-id="1331" data-name="Sucette" data-price="0.5" data-taxe_id="1" onClick={(e) => addProductFromCard(e)}>
+                                <p className="card-text">Sucette</p>
+                            </div>
+                        </div>
+                        <div className="card" style={{"zIndex":"1"}} data-id="1333" data-name="Snaps" data-price="3.5" data-taxe_id="3" onClick={(e) => addProductFromCard(e)}>
+                            <div className="card-img-top snaps" ></div>
+                            <div className="card-info" data-id="1333" data-name="Snaps" data-price="3.5" data-taxe_id="3" onClick={(e) => addProductFromCard(e)}>
+                                <p className="card-text">Snaps</p>
+                            </div>
+                        </div>
                         {/* ADD PASTRIES MODAL HERE */}
                     </div>
                 </div>
