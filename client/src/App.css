@@ -738,6 +738,18 @@ tr:nth-child(even) {
   background-image: url(./assets/images/café.jpeg);
 }
 
+.bonbon-piece {
+  background-image: url(./assets/images/dumle.webp);
+}
+
+.sucette {
+  background-image: url(./assets/images/sucette.png);
+}
+
+.snaps {
+  background-image: url(./assets/images/nubbar.webp);
+}
+
 .cart-container {
   position: relative;
   display:grid;
