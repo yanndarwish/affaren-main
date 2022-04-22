@@ -767,8 +767,7 @@ tr:nth-child(even) {
 
 .cart {
   display:flex;
-  flex-direction:column-reverse;
-  justify-content:flex-end;
+  flex-direction:column;
   margin-block:2rem;
   max-height:35vh;
   align-self:center;
