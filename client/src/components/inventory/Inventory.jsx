@@ -90,6 +90,7 @@ const Inventory = () => {
             });
             const response = await addProduct.json();
             // show alert that product has been added
+            console.log('product has been added')
             alert('Product has been added');
             // //reset the product and barcode input
             setProduct()
@@ -130,7 +131,7 @@ const Inventory = () => {
             </div>
             <div className="inventory-container">
                 <div className="flex">
-                    <input id="barcode-input" className="form-control" placeholder="Scan Barcode" value={barcode} onChange={e => setBarcode((e.target.value))} aria-label="Search Barcode" id="barcode-input" autoFocus />
+                    <input id="barcode-input" className="form-control" placeholder="Scan Barcode" value={barcode} onChange={e => setBarcode((e.target.value))} aria-label="Search Barcode" autoFocus />
                     <button className="btn btn-outline-neutral" onClick={() => reset()}>Reset</button>
                 </div>
 
