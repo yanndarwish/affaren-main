@@ -27,7 +27,7 @@ const printer = async(arg_1, arg_2, arg_3, arg_4, arg_5) => {
                 printer.send()
             } else if (arg_1 !== undefined && arg_5 !== undefined) {
                 // arg_1 = products
-                // arg_2 = arg_2
+                // arg_2 = taxes
                 // arg_3 = total
                 // arg_4 = time
                 // arg_5 = saleId

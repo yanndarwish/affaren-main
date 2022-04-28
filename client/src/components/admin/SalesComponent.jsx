@@ -23,7 +23,7 @@ const SalesComponent = ( {filteredSales}) => {
                     'Content-Type': 'application/json'
                 }
             });
-            alert(`Transaction ${saleId} has been deleted`);
+            alert(`Transaction ${id} has been deleted`);
             }
         catch (err) {
             console.error(err.message);
