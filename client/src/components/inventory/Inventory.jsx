@@ -60,6 +60,7 @@ const Inventory = () => {
             //reset the product and barcode input
             setProduct()
             setBarcode('')
+            document.getElementById('barcode-input').focus();
         } catch (err) {
             console.error(err.message)
         }
@@ -91,10 +92,9 @@ const Inventory = () => {
             const response = await addProduct.json();
             // show alert that product has been added
             alert('Product has been added');
-
             setProduct()
             setBarcode('')
-
+            document.getElementById('barcode-input').focus();
         } catch (err) {
             console.error(err.message)
         }
