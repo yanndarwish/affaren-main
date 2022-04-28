@@ -70,7 +70,7 @@ const Inventory = () => {
         const name = document.getElementById('product-name').value;
         const price = parseFloat(document.getElementById('product-price').value);
         const quantity = parseInt(document.getElementById('product-quantity').value);
-        const alert = parseInt(document.getElementById('product-alert').value);
+        const alertQty = parseInt(document.getElementById('product-alert').value);
         const taxe_id = parseInt(document.getElementById('product-taxe-id').value);
         const product_barcode = barcode.slice(0, -2);
 
@@ -79,7 +79,7 @@ const Inventory = () => {
                 name: name,
                 price: price,
                 quantity: quantity,
-                alert: alert,
+                alert: alertQty,
                 taxe_id: taxe_id,
                 barcode: product_barcode
             }
@@ -90,9 +90,8 @@ const Inventory = () => {
             });
             const response = await addProduct.json();
             // show alert that product has been added
-            console.log('product has been added')
             alert('Product has been added');
-            // //reset the product and barcode input
+
             setProduct()
             setBarcode('')
 
