@@ -507,6 +507,17 @@ const PoS = () => {
     // Set all the accounting info in the database
     const setAccounting = async () => {
         try {
+            let date = new Date();
+            let day = String(date.getDate()).padStart(2, '0');
+            let month = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+            let year = date.getFullYear();
+
+            const getAcualTime = () => {
+                const date = new Date();
+                const time = date.toLocaleTimeString();
+                return time;
+            }
+            
             const body = {
                 hors_taxe_1: Math.round(taxes[`ht_1`] * 100) / 100,
                 hors_taxe_2: Math.round(taxes[`ht_2`] * 100) / 100,
@@ -519,10 +530,10 @@ const PoS = () => {
                 total_3: Math.round(taxes[`total_3`] * 100) / 100,
                 sale_total: Math.round(total * 100) / 100,
                 taxe_amount: Math.round(taxes[`total_tva`] * 100) / 100,
-                sale_year: time[`year`],
-                sale_month: String(time[`month`]),
-                sale_day: String(time[`day`]),
-                sale_time: time[`time`]
+                sale_year: String(year),
+                sale_month: String(month),
+                sale_day: String(day),
+                sale_time: getAcualTime()
             }
             const accounting = await fetch(`http://${ip}:5000/accounting/sales/${saleId}`, {
                 method: 'PUT',
